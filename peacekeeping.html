@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Next Gen Challenge – Peacekeeping Reform</title>
+  <style>
+    /* See index.html for detailed comments. This page reuses the same layout and
+       styles to maintain consistency. */
+    body, html { margin:0; padding:0; font-family: sans-serif; color:#222; background:#fdfdfd; height:100%; overflow-x:hidden; }
+    #splash { position:fixed; top:0; left:0; right:0; bottom:0; z-index:9999; background:#000; display:flex; align-items:center; justify-content:center; flex-direction:column; color:#fff; animation: fadeOut 2s ease forwards 2s; }
+    @keyframes fadeOut { to { opacity:0; visibility:hidden; } }
+    nav { position:sticky; top:0; background:rgba(255,255,255,0.9); backdrop-filter:blur(4px); display:flex; align-items:center; padding:10px; z-index:1000; border-bottom:1px solid #ddd; }
+    nav a { margin-right:20px; text-decoration:none; color:#005691; font-weight:bold; }
+    nav a:hover { text-decoration:underline; }
+    #searchBar { margin-left:auto; position:relative; }
+    #searchInput { padding:6px; border:1px solid #ccc; border-radius:4px; }
+    .parallax { position:relative; height:50vh; background-image:url('a3d099d2-79d2-47bb-9c75-c3dc24d73a04.png'); background-size:cover; background-attachment:fixed; background-position:center; color:#fff; display:flex; align-items:center; justify-content:center; text-align:center; }
+    .parallax h1 { font-size:2.5em; margin:0; text-shadow:2px 2px 8px rgba(0,0,0,0.7); }
+    .parallax p { max-width:700px; margin:10px auto 0; line-height:1.4; font-size:1.1em; text-shadow:1px 1px 4px rgba(0,0,0,0.5); }
+    main { padding:20px; max-width:900px; margin:auto; }
+    .card { background:#fff; border-radius:6px; border:1px solid #ccc; margin-bottom:15px; overflow:hidden; }
+    .card h2 { margin:0; padding:15px; background:#f5f5f5; cursor:pointer; position:relative; }
+    .card h2::after { content:'+'; position:absolute; right:20px; top:50%; transform:translateY(-50%); font-size:1.2em; }
+    .card.active h2::after { content:'–'; }
+    .card .content { padding:15px; display:none; }
+    .card.active .content { display:block; }
+    #hud { position:fixed; right:10px; bottom:10px; background:rgba(255,255,255,0.9); border:1px solid #ccc; border-radius:6px; padding:10px; width:250px; z-index:1001; font-size:0.9em; }
+    #hud h3 { margin-top:0; font-size:1em; color:#005691; }
+    #progressBar { height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden; margin-bottom:5px; }
+    #progressBar div { height:100%; width:0; background:linear-gradient(90deg, #4caf50, #81c784); transition:width 0.5s; }
+    #tasks { list-style:none; padding-left:0; margin:5px 0 0; max-height:150px; overflow-y:auto; }
+    #tasks li { margin-bottom:5px; padding-left:20px; position:relative; cursor:pointer; }
+    #tasks li::before { content:'\u25CB'; position:absolute; left:0; top:0; color:#999; }
+    #tasks li.completed::before { content:'\u25C9'; color:#4caf50; }
+    #constellationCanvas { position:fixed; bottom:0; left:0; width:200px; height:200px; z-index:1000; }
+    footer { margin-top:30px; padding:20px; background:#f5f5f5; font-size:0.9em; color:#333; border-top:1px solid #ddd; }
+    footer h4 { margin-top:0; }
+    footer a { color:#005691; text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+    @media (max-width:600px) { nav { flex-wrap:wrap; } #hud { width:90%; left:5%; right:5%; } .parallax h1 { font-size:2em; } }
+  </style>
+</head>
+<body>
+  <div id="splash" title="Animated splash screen to welcome readers and hint at cosmic themes">
+    <h1>Preparing insight...</h1>
+    <p>Please wait while we initialise the experience.</p>
+  </div>
+  <nav title="Sticky navigation bar letting you move between sections and other pages">
+    <a href="index.html" data-i18n-key="nav-home">Home</a>
+    <a href="peacekeeping.html" data-i18n-key="nav-peace">Peacekeeping Reform</a>
+    <a href="institutions.html" data-i18n-key="nav-institutions">Institutional Change</a>
+    <a href="future.html" data-i18n-key="nav-meta">Meta Chain & Questions</a>
+    <a href="#attributions" data-i18n-key="nav-attributions">Attributions</a>
+    <div id="searchBar" title="Client-side search; type to highlight words in open cards">
+      <input id="searchInput" type="text" placeholder="Search..." data-i18n-key="search-placeholder" />
+    </div>
+    <select id="languageSelect" title="Choose language; UI elements will update accordingly"></select>
+  </nav>
+  <section class="parallax" title="Parallax hero section with cosmic background">
+    <div>
+      <h1 data-i18n-key="intro-title">Peacekeeping Reform</h1>
+      <p data-i18n-key="intro-text">
+        United Nations peace operations have reached an identity crisis. Budgets shrink, missions end and principles are under strain. This page explores proposals to revitalise peacekeeping, safeguard core values and address emerging risks that threaten fragile peace processes.
+      </p>
+    </div>
+  </section>
+  <main>
+    <div class="card" title="Card on peacekeeping identity crisis and reform proposals">
+      <h2 data-i18n-key="card1-title">Identity Crisis & Principles</h2>
+      <div class="content" data-i18n-key="card1-content">
+        <p>
+          High‑level discussions suggest UN peacekeeping is experiencing an identity crisis. Budgets have decreased, missions have ended and the Secretary‑General appears disengaged. Yet peacekeeping still offers an adaptable tool if anchored to its core principles of consent, impartiality and non‑use of force except in self‑defence【126879280082271†L165-L260】. Calls for reform emphasise championing principled peacekeeping through strategic communication, knowledge‑sharing between veterans and new personnel and innovation funding【126879280082271†L165-L260】.
+        </p>
+        <p>
+          How can peace operations remain relevant while confronting asymmetric threats and complex political environments? What reforms are needed to restore confidence among host nations and to align mandates with achievable political solutions?
+        </p>
+      </div>
+    </div>
+    <div class="card" title="Card on the New Agenda for Peace and demilitarisation">
+      <h2 data-i18n-key="card2-title">New Agenda for Peace</h2>
+      <div class="content" data-i18n-key="card2-content">
+        <p>
+          The New Agenda for Peace advocates a political economy approach, universal prevention and support to regional actors while encouraging normative convergence. It calls for demilitarisation and emphasises the link between inequality and conflict【182919173124926†L150-L176】. Future peacekeeping could pivot from militarised interventions towards mediation, protection and capacity building.
+        </p>
+        <p>
+          What would a demilitarised peace operation look like? How can missions support host governments in addressing inequality and structural drivers of violence? Consider how local and regional actors can be empowered to lead sustainable peace efforts.
+        </p>
+      </div>
+    </div>
+    <div class="card" title="Card on guardrails for emerging risks">
+      <h2 data-i18n-key="card3-title">Guardrails for Emerging Risks</h2>
+      <div class="content" data-i18n-key="card3-content">
+        <p>
+          The agenda proposes guardrails to manage emerging risks such as climate change, biological threats, artificial intelligence and outer space activities. It advocates norms like prohibiting attacks on civilian infrastructure and developing legal instruments to ban lethal autonomous weapons【182919173124926†L266-L286】. A formula is offered: converge norms, create structures to verify compliance, establish accountability mechanisms and align financial flows for prevention and peace【182919173124926†L331-L346】.
+        </p>
+        <p>
+          How can such guardrails be implemented within peace operations? What mechanisms can ensure accountability across state and non‑state actors when new technologies blur traditional boundaries?
+        </p>
+      </div>
+    </div>
+    <div class="card" title="Card linking peacekeeping with future generations and digital governance">
+      <h2 data-i18n-key="card4-title">Future Generations & Digital Peace</h2>
+      <div class="content" data-i18n-key="card4-content">
+        <p>
+          Peace operations must account for the rights of future generations and the increasing role of technology. The 2024 Summit of the Future introduced a Global Digital Compact that seeks to close digital divides, ensure safe digital spaces and enhance AI governance【471743158865615†L324-L394】. Integrating foresight into mission planning could help anticipate digital threats and harness new tools for peacekeeping.
+        </p>
+        <p>
+          Imagine a peace mission equipped with AI‑assisted early warning, community‑led digital inclusion programmes and transparent data governance. What safeguards are necessary to prevent misuse and to uphold human agency? How might such innovations help sustain peace beyond the mission’s lifespan?
+        </p>
+      </div>
+    </div>
+  </main>
+  <div id="hud" title="Lightweight HUD with progress bar, task list and constellation visualiser">
+    <h3 data-i18n-key="hud-title">Progress</h3>
+    <div id="progressBar"><div></div></div>
+    <ul id="tasks" data-i18n-key="hud-tasks">
+      <li data-task-id="understand-identity" data-i18n-key="task1">Identify peacekeeping’s identity crisis & principles</li>
+      <li data-task-id="assess-agenda" data-i18n-key="task2">Evaluate the New Agenda for Peace & demilitarisation</li>
+      <li data-task-id="explore-guardrails" data-i18n-key="task3">Analyse guardrails for emerging risks</li>
+      <li data-task-id="envision-future-peace" data-i18n-key="task4">Envision digital & intergenerational peacekeeping</li>
+    </ul>
+  </div>
+  <canvas id="constellationCanvas" width="200" height="200" title="Constellation visualiser showing tasks and progress"></canvas>
+  <footer>
+    <h4 id="attributions" data-i18n-key="attr-title">Attributions & Licenses</h4>
+    <p data-i18n-key="attr-text">
+      This page summarises insights from the Danish Institute for International Studies’ peacekeeping reform brief【126879280082271†L165-L260】, the UNU New Agenda for Peace article【182919173124926†L150-L176】【182919173124926†L266-L286】【182919173124926†L331-L346】 and the Stimson Center’s account of the 2024 Summit of the Future【471743158865615†L324-L394】. These summaries are presented for educational purposes and respect original licences. The cosmic background image was generated using OpenAI’s image generation tool.
+    </p>
+    <p data-i18n-key="zero-harm">
+      Zero‑Harm & Anti‑Inversion: Our goal is to cultivate stewardship and critical analysis. All features operate locally; no personal data is sent anywhere. Engage with these materials to imagine peaceful futures without enabling coercion or harm.
+    </p>
+  </footer>
+  <script>
+    // Translation dictionary and utility functions reused from index.html
+    const translations = {
+      en: {
+        'nav-home': 'Home', 'nav-peace': 'Peacekeeping Reform', 'nav-institutions': 'Institutional Change', 'nav-meta': 'Meta Chain & Questions', 'nav-attributions': 'Attributions',
+        'search-placeholder': 'Search...',
+        'intro-title': 'Peacekeeping Reform',
+        'intro-text': 'United Nations peace operations have reached an identity crisis. Budgets shrink, missions end and principles are under strain. This page explores proposals to revitalise peacekeeping, safeguard core values and address emerging risks that threaten fragile peace processes.',
+        'card1-title': 'Identity Crisis & Principles',
+        'card2-title': 'New Agenda for Peace',
+        'card3-title': 'Guardrails for Emerging Risks',
+        'card4-title': 'Future Generations & Digital Peace',
+        'hud-title': 'Progress',
+        'task1': 'Identify peacekeeping’s identity crisis & principles',
+        'task2': 'Evaluate the New Agenda for Peace & demilitarisation',
+        'task3': 'Analyse guardrails for emerging risks',
+        'task4': 'Envision digital & intergenerational peacekeeping',
+        'attr-title': 'Attributions & Licenses',
+        'attr-text': document.querySelector('footer p').innerHTML,
+        'zero-harm': document.querySelectorAll('footer p')[1].innerHTML
+      },
+      es: {
+        'nav-home': 'Inicio', 'nav-peace': 'Reforma del mantenimiento de la paz', 'nav-institutions': 'Cambio institucional', 'nav-meta': 'Cadena meta y preguntas', 'nav-attributions': 'Atribuciones',
+        'search-placeholder': 'Buscar...',
+        'intro-title': 'Reforma del mantenimiento de la paz',
+        'intro-text': 'Las operaciones de paz de las Naciones Unidas atraviesan una crisis de identidad. Los presupuestos disminuyen, las misiones terminan y los principios están en tensión. Esta página explora propuestas para revitalizar el mantenimiento de la paz, salvaguardar valores centrales y abordar riesgos emergentes que amenazan procesos frágiles.',
+        'card1-title': 'Crisis de identidad y principios',
+        'card2-title': 'Nueva Agenda para la Paz',
+        'card3-title': 'Salvaguardias para riesgos emergentes',
+        'card4-title': 'Generaciones futuras y paz digital',
+        'hud-title': 'Progreso',
+        'task1': 'Identificar la crisis de identidad y los principios',
+        'task2': 'Evaluar la Nueva Agenda para la Paz y la desmilitarización',
+        'task3': 'Analizar las salvaguardias para riesgos emergentes',
+        'task4': 'Imaginar un mantenimiento de la paz digital e intergeneracional',
+        'attr-title': 'Atribuciones y licencias',
+        'attr-text': document.querySelector('footer p').innerHTML,
+        'zero-harm': document.querySelectorAll('footer p')[1].innerHTML
+      },
+      fr: {
+        'nav-home': 'Accueil', 'nav-peace': 'Réforme du maintien de la paix', 'nav-institutions': 'Changement institutionnel', 'nav-meta': 'Chaîne méta et questions', 'nav-attributions': 'Attributions',
+        'search-placeholder': 'Recherche...',
+        'intro-title': 'Réforme du maintien de la paix',
+        'intro-text': 'Les opérations de paix des Nations Unies traversent une crise d’identité. Les budgets diminuent, les missions se terminent et les principes sont mis à rude épreuve. Cette page explore des propositions pour revitaliser le maintien de la paix, sauvegarder les valeurs fondamentales et faire face aux risques émergents.',
+        'card1-title': 'Crise d’identité et principes',
+        'card2-title': 'Nouvelle Agenda pour la Paix',
+        'card3-title': 'Garde-fous pour les risques émergents',
+        'card4-title': 'Générations futures et paix numérique',
+        'hud-title': 'Progrès',
+        'task1': 'Identifier la crise d’identité et les principes',
+        'task2': 'Évaluer le Nouvel Agenda pour la Paix et la démilitarisation',
+        'task3': 'Analyser les garde-fous pour les risques émergents',
+        'task4': 'Imaginer un maintien de la paix numérique et intergénérationnel',
+        'attr-title': 'Attributions et licences',
+        'attr-text': document.querySelector('footer p').innerHTML,
+        'zero-harm': document.querySelectorAll('footer p')[1].innerHTML
+      },
+      de: {
+        'nav-home': 'Startseite', 'nav-peace': 'Friedenssicherung Reform', 'nav-institutions': 'Institutioneller Wandel', 'nav-meta': 'Meta-Kette & Fragen', 'nav-attributions': 'Zuschreibungen',
+        'search-placeholder': 'Suche...',
+        'intro-title': 'Reform der Friedenssicherung',
+        'intro-text': 'UN-Friedensoperationen befinden sich in einer Identitätskrise. Die Budgets schrumpfen, Missionen enden und Prinzipien stehen unter Druck. Diese Seite untersucht Vorschläge zur Revitalisierung der Friedenssicherung, zum Schutz der Grundwerte und zur Bewältigung neuer Risiken.',
+        'card1-title': 'Identitätskrise & Prinzipien',
+        'card2-title': 'Neue Agenda für den Frieden',
+        'card3-title': 'Schutzschienen für neue Risiken',
+        'card4-title': 'Zukünftige Generationen & digitale Friedenssicherung',
+        'hud-title': 'Fortschritt',
+        'task1': 'Die Identitätskrise & Prinzipien erkennen',
+        'task2': 'Die Neue Agenda für den Frieden bewerten',
+        'task3': 'Schutzschienen für neue Risiken analysieren',
+        'task4': 'Digitale & intergenerationale Friedenssicherung entwerfen',
+        'attr-title': 'Zuschreibungen & Lizenzen',
+        'attr-text': document.querySelector('footer p').innerHTML,
+        'zero-harm': document.querySelectorAll('footer p')[1].innerHTML
+      }
+    };
+    const languages = ['en','es','fr','de','ru','zh','ar','hi','pt','ja','it','ko','nl','sv','el','tr','fa','vi','id','yo'];
+    const langSelect = document.getElementById('languageSelect');
+    languages.forEach(code => {
+      const opt = document.createElement('option');
+      opt.value = code;
+      opt.textContent = code.toUpperCase();
+      langSelect.appendChild(opt);
+    });
+    let currentLang = localStorage.getItem('preferredLang') || 'en';
+    langSelect.value = currentLang;
+    function applyTranslations() {
+      const dict = translations[currentLang] || translations.en;
+      document.querySelectorAll('[data-i18n-key]').forEach(el => {
+        const key = el.getAttribute('data-i18n-key');
+        if (dict && dict[key]) {
+          if (el.placeholder) {
+            el.placeholder = dict[key];
+          } else {
+            el.innerHTML = dict[key];
+          }
+        }
+      });
+    }
+    langSelect.addEventListener('change', () => {
+      currentLang = langSelect.value;
+      localStorage.setItem('preferredLang', currentLang);
+      applyTranslations();
+    });
+    applyTranslations();
+    // Collapsible card logic
+    document.querySelectorAll('.card h2').forEach(header => {
+      header.addEventListener('click', () => {
+        header.parentElement.classList.toggle('active');
+      });
+    });
+    // Search
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const term = this.value.trim().toLowerCase();
+      document.querySelectorAll('.card').forEach(card => {
+        const content = card.querySelector('.content');
+        if (!content) return;
+        content.innerHTML = content.innerHTML.replace(/<mark>(.*?)<\/mark>/g, '$1');
+        if (term === '') return;
+        const regex = new RegExp(`(${term})`, 'gi');
+        content.innerHTML = content.innerHTML.replace(regex, '<mark>$1</mark>');
+      });
+    });
+    // IndexedDB progress tracking
+    let db;
+    const request = indexedDB.open('NextGenDB', 1);
+    request.onupgradeneeded = function(event) {
+      db = event.target.result;
+      db.createObjectStore('progress', { keyPath: 'id' });
+    };
+    request.onsuccess = function(event) {
+      db = event.target.result;
+      markPageVisited('peacekeeping');
+      loadProgress();
+      loadTaskStates();
+    };
+    function markPageVisited(pageId) {
+      if (!db) return;
+      const tx = db.transaction('progress', 'readwrite');
+      const store = tx.objectStore('progress');
+      store.put({ id: pageId, visited: true });
+    }
+    function loadProgress() {
+      if (!db) return;
+      const tx = db.transaction('progress', 'readonly');
+      const store = tx.objectStore('progress');
+      store.getAll().onsuccess = function(e) {
+        const visited = e.target.result.filter(item => item.visited).length;
+        const total = 4;
+        const progress = Math.round((visited / total) * 100);
+        document.querySelector('#progressBar div').style.width = progress + '%';
+      };
+    }
+    document.querySelectorAll('#tasks li').forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.toggle('completed');
+        saveTaskState(item.getAttribute('data-task-id'), item.classList.contains('completed'));
+      });
+    });
+    function saveTaskState(taskId, completed) {
+      if (!db) return;
+      const tx = db.transaction('progress', 'readwrite');
+      const store = tx.objectStore('progress');
+      store.put({ id: taskId, completed: completed });
+    }
+    function loadTaskStates() {
+      if (!db) return;
+      const tx = db.transaction('progress', 'readonly');
+      const store = tx.objectStore('progress');
+      document.querySelectorAll('#tasks li').forEach(item => {
+        const id = item.getAttribute('data-task-id');
+        store.get(id).onsuccess = function(e) {
+          if (e.target.result && e.target.result.completed) {
+            item.classList.add('completed');
+          }
+        };
+      });
+    }
+    // Constellation visualiser
+    const canvas = document.getElementById('constellationCanvas');
+    const ctx = canvas.getContext('2d');
+    const stars = [];
+    const starCount = 12;
+    for (let i = 0; i < starCount; i++) {
+      stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.5 });
+    }
+    function animateStars() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for (let i=0; i<starCount; i++) {
+        const s = stars[i];
+        s.x += s.vx;
+        s.y += s.vy;
+        if (s.x<0 || s.x>canvas.width) s.vx*=-1;
+        if (s.y<0 || s.y>canvas.height) s.vy*=-1;
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,2,0,Math.PI*2);
+        ctx.fillStyle = '#005691';
+        ctx.fill();
+        for (let j=i+1; j<starCount; j++) {
+          const s2 = stars[j];
+          const dist = Math.hypot(s.x-s2.x,s.y-s2.y);
+          if (dist<50) {
+            ctx.beginPath();
+            ctx.moveTo(s.x,s.y);
+            ctx.lineTo(s2.x,s2.y);
+            ctx.strokeStyle = 'rgba(0,86,145,' + (1 - dist/50) + ')';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animateStars);
+    }
+    animateStars();
+  </script>
+</body>
+</html>

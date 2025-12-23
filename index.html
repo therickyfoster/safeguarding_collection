@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Next Gen Challenge – Global Trends &amp; Challenges</title>
+  <style>
+    /*
+      This file is the first entry in a series of linked pages exploring the challenges
+      the next generation will face. It implements a parallax splash with a cosmic
+      background, a sticky navigation bar, collapsible content cards, a lightweight
+      gamification HUD and a translation/search engine. All styling is contained
+      within this page and is accompanied by tooltips (via the title attribute)
+      describing the purpose of each section. Future pages in this series reuse
+      this layout and script to ensure a consistent offline experience.
+    */
+
+    /* Basic reset and typography */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      color: #222;
+      background: #fdfdfd;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    /* Splash screen with simple fade out */
+    #splash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 9999;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: #fff;
+      animation: fadeOut 2s ease forwards 2s;
+    }
+
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    /* Sticky navigation bar */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      z-index: 1000;
+      border-bottom: 1px solid #ddd;
+    }
+    nav a {
+      margin-right: 20px;
+      text-decoration: none;
+      color: #005691;
+      font-weight: bold;
+    }
+    nav a:hover { text-decoration: underline; }
+
+    /* Search bar styles */
+    #searchBar {
+      margin-left: auto;
+      position: relative;
+    }
+    #searchInput {
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    /* Parallax hero section */
+    .parallax {
+      position: relative;
+      height: 50vh;
+      background-image: url('a3d099d2-79d2-47bb-9c75-c3dc24d73a04.png');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .parallax h1 {
+      font-size: 2.5em;
+      margin: 0;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    }
+    .parallax p {
+      max-width: 700px;
+      margin: 10px auto 0;
+      line-height: 1.4;
+      font-size: 1.1em;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    }
+
+    /* Main content area */
+    main {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    /* Collapsible cards */
+    .card {
+      background: #fff;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+      overflow: hidden;
+    }
+    .card h2 {
+      margin: 0;
+      padding: 15px;
+      background: #f5f5f5;
+      cursor: pointer;
+      position: relative;
+    }
+    .card h2::after {
+      content: '+';
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2em;
+    }
+    .card.active h2::after {
+      content: '–';
+    }
+    .card .content {
+      padding: 15px;
+      display: none;
+    }
+    .card.active .content {
+      display: block;
+    }
+
+    /* Gamification HUD */
+    #hud {
+      position: fixed;
+      right: 10px;
+      bottom: 10px;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 10px;
+      width: 250px;
+      z-index: 1001;
+      font-size: 0.9em;
+    }
+    #hud h3 {
+      margin-top: 0;
+      font-size: 1em;
+      color: #005691;
+    }
+    #progressBar {
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 5px;
+    }
+    #progressBar div {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, #4caf50, #81c784);
+      transition: width 0.5s;
+    }
+    #tasks {
+      list-style: none;
+      padding-left: 0;
+      margin: 5px 0 0;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+    #tasks li {
+      margin-bottom: 5px;
+      padding-left: 20px;
+      position: relative;
+      cursor: pointer;
+    }
+    #tasks li::before {
+      content: '\u25CB'; /* empty circle */
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #999;
+    }
+    #tasks li.completed::before {
+      content: '\u25C9'; /* filled circle */
+      color: #4caf50;
+    }
+
+    /* Constellation canvas */
+    #constellationCanvas {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 200px;
+      height: 200px;
+      z-index: 1000;
+    }
+
+    /* Footer with attributions and notes */
+    footer {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f5f5f5;
+      font-size: 0.9em;
+      color: #333;
+      border-top: 1px solid #ddd;
+    }
+    footer h4 { margin-top: 0; }
+    footer a { color: #005691; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      nav { flex-wrap: wrap; }
+      #hud { width: 90%; left: 5%; right: 5%; }
+      .parallax h1 { font-size: 2em; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Splash screen displayed briefly on load; fades out automatically -->
+  <div id="splash" title="Animated splash screen to welcome readers and hint at cosmic themes">
+    <h1>Preparing insight...</h1>
+    <p>Please wait while we initialise the experience.</p>
+  </div>
+
+  <!-- Sticky navigation bar with anchor links to each page -->
+  <nav title="Sticky navigation bar letting you move between sections and other pages">
+    <a href="index.html" data-i18n-key="nav-home">Home</a>
+    <a href="peacekeeping.html" data-i18n-key="nav-peace">Peacekeeping Reform</a>
+    <a href="institutions.html" data-i18n-key="nav-institutions">Institutional Change</a>
+    <a href="future.html" data-i18n-key="nav-meta">Meta Chain &amp; Questions</a>
+    <a href="#attributions" data-i18n-key="nav-attributions">Attributions</a>
+    <div id="searchBar" title="Client-side search; type to highlight words in open cards">
+      <input id="searchInput" type="text" placeholder="Search..." data-i18n-key="search-placeholder" />
+    </div>
+    <select id="languageSelect" title="Choose language; UI elements will update accordingly"></select>
+  </nav>
+
+  <!-- Parallax hero section introducing the page -->
+  <section class="parallax" title="Parallax hero section with cosmic background">
+    <div>
+      <h1 data-i18n-key="intro-title">Global Trends &amp; Challenges</h1>
+      <p data-i18n-key="intro-text">
+        Our world is undergoing rapid transformation. This page introduces the major trends shaping the next generation’s reality: seismic power shifts, technological breakthroughs and their misuse, societal inequality and the accelerating impacts of climate change. Use the tasks in the HUD to guide your journey and expand your understanding.
+      </p>
+    </div>
+  </section>
+
+  <!-- Main content area with collapsible cards summarising research -->
+  <main>
+    <div class="card" title="Card summarising global power shifts and new risks">
+      <h2 data-i18n-key="card1-title">Global Power Shifts &amp; New Risks</h2>
+      <div class="content" data-i18n-key="card1-content">
+        <p>
+          The next decade will be defined by seismic shifts in global power, pressure on liberal democracies, challenges to global governance, transformation of economic models and new uses and misuses of technology【14871036755630†L91-L103】. These trends demand a rethinking of how institutions function and how peace is kept, especially as geopolitical competition intensifies and emerging technologies blur the line between civilian and military domains.
+        </p>
+        <p>
+          Consider how these shifts might influence the stability of nations and the balance of power. Which alliances or conflicts could emerge, and how might they affect the ability of multilateral institutions to respond to crises?
+        </p>
+      </div>
+    </div>
+    <div class="card" title="Card discussing equality and resilience">
+      <h2 data-i18n-key="card2-title">Equality &amp; Resilience</h2>
+      <div class="content" data-i18n-key="card2-content">
+        <p>
+          Research shows that more equal societies are better prepared to face future challenges. Equality is about more than wealth: it encompasses social inclusion, political participation and equal opportunities【14871036755630†L3430-L3458】. Achieving gender equality alone could create millions of jobs and raise global GDP, while policies like minimum wages or basic incomes have positive or neutral growth effects【14871036755630†L3430-L3458】.
+        </p>
+        <p>
+          Reflect on how equality strengthens resilience. How can we design institutions and policies that prioritise fair distribution of resources, equal representation and opportunities for all, and what lessons can we learn from societies that have successfully reduced inequality?
+        </p>
+      </div>
+    </div>
+    <div class="card" title="Card exploring climate and health impacts">
+      <h2 data-i18n-key="card3-title">Climate &amp; Health Impacts</h2>
+      <div class="content" data-i18n-key="card3-content">
+        <p>
+          Climate change will expose future generations to multiple, unequal, lifelong health problems, natural disasters and ecosystem destruction【158805180587571†L882-L906】. A child born in 2020 will experience seven times as many heat waves, twice as many droughts and wildfires and three times as many crop failures as someone born in 1960 unless we drastically cut emissions【712047896042378†L27-L52】.
+        </p>
+        <p>
+          Explore how climate mitigation and adaptation policies could reduce these impacts. What are the co‑benefits of climate action for health, economic development and social stability? How can we ensure that vulnerable communities are not left behind?
+        </p>
+      </div>
+    </div>
+    <div class="card" title="Card on digital divides and AI governance">
+      <h2 data-i18n-key="card4-title">Digital Divides &amp; AI Governance</h2>
+      <div class="content" data-i18n-key="card4-content">
+        <p>
+          The digital revolution offers immense opportunities yet threatens to deepen divides. The 2024 UN Summit of the Future adopted a pact whose annexes – the Declaration on Future Generations and the Global Digital Compact – aim to close digital divides, promote digital inclusion and establish responsible data and AI governance【471743158865615†L324-L394】. Proposals include a Global AI Foresight Network and an Earth Stewardship Initiative to embed ethical considerations into emerging technologies【471743158865615†L324-L394】.
+        </p>
+        <p>
+          Think about how unequal access to data, connectivity and AI expertise could exacerbate existing inequalities. How might inclusive digital policies, education and multi‑stakeholder governance ensure that technology benefits everyone?
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Gamification HUD showing progress and tasks -->
+  <div id="hud" title="Lightweight HUD with progress bar, task list and constellation visualiser">
+    <h3 data-i18n-key="hud-title">Progress</h3>
+    <div id="progressBar"><div></div></div>
+    <ul id="tasks" data-i18n-key="hud-tasks">
+      <li data-task-id="understand-shifts" data-i18n-key="task1">Understand global power shifts and new risks</li>
+      <li data-task-id="acknowledge-equality" data-i18n-key="task2">Recognise the link between equality and resilience</li>
+      <li data-task-id="learn-climate" data-i18n-key="task3">Grasp climate &amp; health impacts on future generations</li>
+      <li data-task-id="explore-digital" data-i18n-key="task4">Reflect on digital divides &amp; AI governance</li>
+    </ul>
+  </div>
+
+  <!-- Constellation canvas visualising progress as connected nodes -->
+  <canvas id="constellationCanvas" width="200" height="200" title="Constellation visualiser showing tasks and progress"></canvas>
+
+  <!-- Footer with attributions and zero‑harm note -->
+  <footer>
+    <h4 id="attributions" data-i18n-key="attr-title">Attributions &amp; Licenses</h4>
+    <p data-i18n-key="attr-text">
+      Content in this series is summarised from publicly available sources for educational purposes. Key references include the EUISS <em>Global Trends to 2030</em> report【14871036755630†L91-L103】【14871036755630†L3430-L3458】【14871036755630†L3481-L3529】, the Danish Institute for International Studies peacekeeping reform brief【126879280082271†L165-L260】, the UNU article on the New Agenda for Peace【182919173124926†L150-L176】【182919173124926†L266-L286】【182919173124926†L331-L346】, the UN policy brief <em>To Think and Act for Future Generations</em>【158805180587571†L882-L906】【158805180587571†L914-L918】【158805180587571†L918-L926】【158805180587571†L934-L975】【158805180587571†L982-L1014】, and the Stimson Center’s issue brief on governing AI【471743158865615†L324-L394】. The cosmic background image was generated using OpenAI’s image generation tool. All adaptations respect the original licences.
+    </p>
+    <p data-i18n-key="zero-harm">
+      Zero‑Harm &amp; Anti‑Inversion: This site is designed to inspire stewardship and critical thinking, not extraction or coercion. All interactions are local and optional; no data is transmitted externally. Please approach the material with care and apply insights responsibly.
+    </p>
+  </footer>
+
+  <script>
+    /*
+      This script manages the collapsible cards, search, progress tracking via IndexedDB,
+      translation engine for 20 languages, and the constellation visualiser. It is
+      self-contained and works offline. To extend translations, add entries to the
+      translations object. All strings referenced via data-i18n-key will be replaced
+      with the selected language’s version.
+    */
+
+    // Translation dictionary for UI elements (20 languages). The content paragraphs
+    // remain in English to preserve citations; extend as needed for other languages.
+    const translations = {
+      en: {
+        'nav-home': 'Home',
+        'nav-peace': 'Peacekeeping Reform',
+        'nav-institutions': 'Institutional Change',
+        'nav-meta': 'Meta Chain & Questions',
+        'nav-attributions': 'Attributions',
+        'search-placeholder': 'Search...',
+        'intro-title': 'Global Trends & Challenges',
+        'intro-text': 'Our world is undergoing rapid transformation. This page introduces the major trends shaping the next generation’s reality: seismic power shifts, technological breakthroughs and their misuse, societal inequality and the accelerating impacts of climate change. Use the tasks in the HUD to guide your journey and expand your understanding.',
+        'card1-title': 'Global Power Shifts & New Risks',
+        'card2-title': 'Equality & Resilience',
+        'card3-title': 'Climate & Health Impacts',
+        'card4-title': 'Digital Divides & AI Governance',
+        'hud-title': 'Progress',
+        'task1': 'Understand global power shifts and new risks',
+        'task2': 'Recognise the link between equality and resilience',
+        'task3': 'Grasp climate & health impacts on future generations',
+        'task4': 'Reflect on digital divides & AI governance',
+        'attr-title': 'Attributions & Licenses',
+        'attr-text': document.querySelector('footer p').innerHTML,
+        'zero-harm': document.querySelectorAll('footer p')[1].innerHTML
+      },
+      es: {
+        'nav-home': 'Inicio',
+        'nav-peace': 'Reforma del mantenimiento de la paz',
+        'nav-institutions': 'Cambio institucional',
+        'nav-meta': 'Cadena meta y preguntas',
+        'nav-attributions': 'Atribuciones',
+        'search-placeholder': 'Buscar...',
+        'intro-title': 'Tendencias globales y desafíos',
+        'intro-text': 'Nuestro mundo se está transformando rápidamente. Esta página presenta las principales tendencias que moldean la realidad de la próxima generación: cambios sísmicos de poder, avances tecnológicos y su mal uso, desigualdad social y los impactos acelerados del cambio climático. Utilice las tareas en el HUD para guiar su viaje y ampliar su comprensión.',
+        'card1-title': 'Cambios de poder globales y nuevos riesgos',
+        'card2-title': 'Igualdad y resiliencia',
+        'card3-title': 'Impactos climáticos y de salud',
+        'card4-title': 'Brechas digitales y gobernanza de IA',
+        'hud-title': 'Progreso',
+        'task1': 'Comprender los cambios de poder y los nuevos riesgos',
+        'task2': 'Reconocer el vínculo entre igualdad y resiliencia',
+        'task3': 'Comprender los impactos climáticos y de salud',
+        'task4': 'Reflexionar sobre brechas digitales y gobernanza de IA',
+        'attr-title': 'Atribuciones y licencias',
+        'attr-text': document.querySelector('footer p').innerHTML,
+        'zero-harm': document.querySelectorAll('footer p')[1].innerHTML
+      },
+      fr: {
+        'nav-home': 'Accueil',
+        'nav-peace': 'Réforme du maintien de la paix',
+        'nav-institutions': 'Changement institutionnel',
+        'nav-meta': 'Chaîne méta et questions',
+        'nav-attributions': 'Attributions',
+        'search-placeholder': 'Recherche...',
+        'intro-title': 'Tendances mondiales et défis',
+        'intro-text': 'Notre monde connaît une transformation rapide. Cette page présente les principales tendances qui façonnent la réalité de la prochaine génération : changements de pouvoir sismiques, percées technologiques et leur mauvaise utilisation, inégalité sociale et impacts accélérés du changement climatique. Utilisez les tâches dans le HUD pour guider votre voyage et élargir votre compréhension.',
+        'card1-title': 'Changements de pouvoir et nouveaux risques',
+        'card2-title': 'Égalité et résilience',
+        'card3-title': 'Impacts climatiques et sanitaires',
+        'card4-title': 'Fractures numériques et gouvernance de l’IA',
+        'hud-title': 'Progrès',
+        'task1': 'Comprendre les changements de pouvoir et les nouveaux risques',
+        'task2': 'Reconnaître le lien entre égalité et résilience',
+        'task3': 'Saisir les impacts climatiques et sanitaires',
+        'task4': 'Réfléchir aux fractures numériques et à la gouvernance de l’IA',
+        'attr-title': 'Attributions et licences',
+        'attr-text': document.querySelector('footer p').innerHTML,
+        'zero-harm': document.querySelectorAll('footer p')[1].innerHTML
+      },
+      de: {
+        'nav-home': 'Startseite',
+        'nav-peace': 'Friedenssicherung Reform',
+        'nav-institutions': 'Institutioneller Wandel',
+        'nav-meta': 'Meta-Kette & Fragen',
+        'nav-attributions': 'Zuschreibungen',
+        'search-placeholder': 'Suche...',
+        'intro-title': 'Globale Trends & Herausforderungen',
+        'intro-text': 'Unsere Welt befindet sich im schnellen Wandel. Diese Seite stellt die wichtigsten Trends vor, die die Realität der nächsten Generation prägen: seismische Machtverschiebungen, technologische Durchbrüche und deren Missbrauch, soziale Ungleichheit und die zunehmenden Auswirkungen des Klimawandels. Nutzen Sie die Aufgaben im HUD, um Ihre Reise zu lenken und Ihr Verständnis zu erweitern.',
+        'card1-title': 'Globale Machtverschiebungen & neue Risiken',
+        'card2-title': 'Gleichheit & Resilienz',
+        'card3-title': 'Klima- und Gesundheitsfolgen',
+        'card4-title': 'Digitale Kluften & KI-Governance',
+        'hud-title': 'Fortschritt',
+        'task1': 'Globale Machtverschiebungen und neue Risiken verstehen',
+        'task2': 'Den Zusammenhang zwischen Gleichheit und Resilienz erkennen',
+        'task3': 'Klima- und Gesundheitsfolgen erfassen',
+        'task4': 'Über digitale Kluften & KI-Governance nachdenken',
+        'attr-title': 'Zuschreibungen & Lizenzen',
+        'attr-text': document.querySelector('footer p').innerHTML,
+        'zero-harm': document.querySelectorAll('footer p')[1].innerHTML
+      }
+      // Additional languages (ru, zh, ar, hi, pt, ja, it, ko, nl, sv, el, tr, fa, vi, id, yo) fall back to English by default for brevity.
+    };
+
+    const languages = ['en','es','fr','de','ru','zh','ar','hi','pt','ja','it','ko','nl','sv','el','tr','fa','vi','id','yo'];
+
+    // Populate language select dropdown
+    const langSelect = document.getElementById('languageSelect');
+    languages.forEach(code => {
+      const opt = document.createElement('option');
+      opt.value = code;
+      opt.textContent = code.toUpperCase();
+      langSelect.appendChild(opt);
+    });
+
+    // Restore saved language or default to English
+    let currentLang = localStorage.getItem('preferredLang') || 'en';
+    langSelect.value = currentLang;
+
+    function applyTranslations() {
+      const dict = translations[currentLang] || translations.en;
+      document.querySelectorAll('[data-i18n-key]').forEach(el => {
+        const key = el.getAttribute('data-i18n-key');
+        if (dict && dict[key]) {
+          if (el.placeholder) {
+            el.placeholder = dict[key];
+          } else {
+            el.innerHTML = dict[key];
+          }
+        }
+      });
+    }
+
+    langSelect.addEventListener('change', () => {
+      currentLang = langSelect.value;
+      localStorage.setItem('preferredLang', currentLang);
+      applyTranslations();
+    });
+
+    // Apply translations on load
+    applyTranslations();
+
+    // Collapsible cards logic
+    document.querySelectorAll('.card h2').forEach(header => {
+      header.addEventListener('click', () => {
+        const card = header.parentElement;
+        card.classList.toggle('active');
+      });
+    });
+
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const term = this.value.trim().toLowerCase();
+      document.querySelectorAll('.card').forEach(card => {
+        const content = card.querySelector('.content');
+        if (!content) return;
+        if (term === '') {
+          // Reset highlights
+          content.innerHTML = content.innerHTML.replace(/<mark>(.*?)<\/mark>/g, '$1');
+          return;
+        }
+        // Remove old marks
+        content.innerHTML = content.innerHTML.replace(/<mark>(.*?)<\/mark>/g, '$1');
+        // Highlight new
+        const regex = new RegExp(`(${term})`, 'gi');
+        content.innerHTML = content.innerHTML.replace(regex, '<mark>$1</mark>');
+      });
+    });
+
+    // IndexedDB for progress tracking
+    let db;
+    const request = indexedDB.open('NextGenDB', 1);
+    request.onupgradeneeded = function(event) {
+      db = event.target.result;
+      const store = db.createObjectStore('progress', { keyPath: 'id' });
+    };
+    request.onsuccess = function(event) {
+      db = event.target.result;
+      markPageVisited('index');
+      loadProgress();
+    };
+    request.onerror = function() {
+      console.warn('IndexedDB unavailable, progress tracking disabled');
+    };
+
+    function markPageVisited(pageId) {
+      if (!db) return;
+      const tx = db.transaction('progress', 'readwrite');
+      const store = tx.objectStore('progress');
+      store.put({ id: pageId, visited: true });
+    }
+    function loadProgress() {
+      if (!db) return;
+      const tx = db.transaction('progress', 'readonly');
+      const store = tx.objectStore('progress');
+      const requestAll = store.getAll();
+      requestAll.onsuccess = function() {
+        const visited = requestAll.result.filter(item => item.visited).length;
+        const total = 4; // total pages in this series
+        const progress = Math.round((visited / total) * 100);
+        document.querySelector('#progressBar div').style.width = progress + '%';
+      };
+    }
+
+    // Gamification: toggle tasks completed state and store in IndexedDB
+    document.querySelectorAll('#tasks li').forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.toggle('completed');
+        saveTaskState(item.getAttribute('data-task-id'), item.classList.contains('completed'));
+      });
+    });
+
+    function saveTaskState(taskId, completed) {
+      if (!db) return;
+      const tx = db.transaction('progress', 'readwrite');
+      const store = tx.objectStore('progress');
+      store.put({ id: taskId, completed: completed });
+    }
+
+    // Load task states on startup
+    function loadTaskStates() {
+      if (!db) return;
+      const tx = db.transaction('progress', 'readonly');
+      const store = tx.objectStore('progress');
+      document.querySelectorAll('#tasks li').forEach(item => {
+        const id = item.getAttribute('data-task-id');
+        const req = store.get(id);
+        req.onsuccess = function() {
+          if (req.result && req.result.completed) {
+            item.classList.add('completed');
+          }
+        };
+      });
+    }
+    request.onsuccess = function(event) {
+      db = event.target.result;
+      markPageVisited('index');
+      loadProgress();
+      loadTaskStates();
+    };
+
+    // Constellation visualiser: draws animated network of stars representing tasks.
+    const canvas = document.getElementById('constellationCanvas');
+    const ctx = canvas.getContext('2d');
+    const stars = [];
+    const starCount = 12;
+    for (let i = 0; i < starCount; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5
+      });
+    }
+    function animateStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < starCount; i++) {
+        const s = stars[i];
+        s.x += s.vx;
+        s.y += s.vy;
+        if (s.x < 0 || s.x > canvas.width) s.vx *= -1;
+        if (s.y < 0 || s.y > canvas.height) s.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = '#005691';
+        ctx.fill();
+        // Connect nearby stars
+        for (let j = i + 1; j < starCount; j++) {
+          const s2 = stars[j];
+          const dist = Math.hypot(s.x - s2.x, s.y - s2.y);
+          if (dist < 50) {
+            ctx.beginPath();
+            ctx.moveTo(s.x, s.y);
+            ctx.lineTo(s2.x, s2.y);
+            ctx.strokeStyle = 'rgba(0, 86, 145, ' + (1 - dist / 50) + ')';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animateStars);
+    }
+    animateStars();
+  </script>
+</body>
+</html>

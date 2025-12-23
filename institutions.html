@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Next Gen Challenge – Institutional Change</title>
+  <style>
+    body, html { margin:0; padding:0; font-family:sans-serif; color:#222; background:#fdfdfd; height:100%; overflow-x:hidden; }
+    #splash { position:fixed; top:0; left:0; right:0; bottom:0; z-index:9999; background:#000; display:flex; align-items:center; justify-content:center; flex-direction:column; color:#fff; animation: fadeOut 2s ease forwards 2s; }
+    @keyframes fadeOut { to { opacity:0; visibility:hidden; } }
+    nav { position:sticky; top:0; background:rgba(255,255,255,0.9); backdrop-filter:blur(4px); display:flex; align-items:center; padding:10px; z-index:1000; border-bottom:1px solid #ddd; }
+    nav a { margin-right:20px; text-decoration:none; color:#005691; font-weight:bold; }
+    nav a:hover { text-decoration:underline; }
+    #searchBar { margin-left:auto; position:relative; }
+    #searchInput { padding:6px; border:1px solid #ccc; border-radius:4px; }
+    .parallax { position:relative; height:50vh; background-image:url('a3d099d2-79d2-47bb-9c75-c3dc24d73a04.png'); background-size:cover; background-attachment:fixed; background-position:center; color:#fff; display:flex; align-items:center; justify-content:center; text-align:center; }
+    .parallax h1 { font-size:2.5em; margin:0; text-shadow:2px 2px 8px rgba(0,0,0,0.7); }
+    .parallax p { max-width:700px; margin:10px auto 0; line-height:1.4; font-size:1.1em; text-shadow:1px 1px 4px rgba(0,0,0,0.5); }
+    main { padding:20px; max-width:900px; margin:auto; }
+    .card { background:#fff; border-radius:6px; border:1px solid #ccc; margin-bottom:15px; overflow:hidden; }
+    .card h2 { margin:0; padding:15px; background:#f5f5f5; cursor:pointer; position:relative; }
+    .card h2::after { content:'+'; position:absolute; right:20px; top:50%; transform:translateY(-50%); font-size:1.2em; }
+    .card.active h2::after { content:'–'; }
+    .card .content { padding:15px; display:none; }
+    .card.active .content { display:block; }
+    #hud { position:fixed; right:10px; bottom:10px; background:rgba(255,255,255,0.9); border:1px solid #ccc; border-radius:6px; padding:10px; width:250px; z-index:1001; font-size:0.9em; }
+    #hud h3 { margin-top:0; font-size:1em; color:#005691; }
+    #progressBar { height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden; margin-bottom:5px; }
+    #progressBar div { height:100%; width:0; background:linear-gradient(90deg,#4caf50,#81c784); transition:width 0.5s; }
+    #tasks { list-style:none; padding-left:0; margin:5px 0 0; max-height:150px; overflow-y:auto; }
+    #tasks li { margin-bottom:5px; padding-left:20px; position:relative; cursor:pointer; }
+    #tasks li::before { content:'\u25CB'; position:absolute; left:0; top:0; color:#999; }
+    #tasks li.completed::before { content:'\u25C9'; color:#4caf50; }
+    #constellationCanvas { position:fixed; bottom:0; left:0; width:200px; height:200px; z-index:1000; }
+    footer { margin-top:30px; padding:20px; background:#f5f5f5; font-size:0.9em; color:#333; border-top:1px solid #ddd; }
+    footer h4 { margin-top:0; }
+    footer a { color:#005691; text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+    @media (max-width:600px) { nav { flex-wrap:wrap; } #hud { width:90%; left:5%; right:5%; } .parallax h1 { font-size:2em; } }
+  </style>
+</head>
+<body>
+  <div id="splash" title="Animated splash screen to welcome readers and hint at cosmic themes">
+    <h1>Preparing insight...</h1>
+    <p>Please wait while we initialise the experience.</p>
+  </div>
+  <nav title="Sticky navigation bar letting you move between sections and other pages">
+    <a href="index.html" data-i18n-key="nav-home">Home</a>
+    <a href="peacekeeping.html" data-i18n-key="nav-peace">Peacekeeping Reform</a>
+    <a href="institutions.html" data-i18n-key="nav-institutions">Institutional Change</a>
+    <a href="future.html" data-i18n-key="nav-meta">Meta Chain & Questions</a>
+    <a href="#attributions" data-i18n-key="nav-attributions">Attributions</a>
+    <div id="searchBar" title="Client-side search; type to highlight words in open cards">
+      <input id="searchInput" type="text" placeholder="Search..." data-i18n-key="search-placeholder" />
+    </div>
+    <select id="languageSelect" title="Choose language; UI elements will update accordingly"></select>
+  </nav>
+  <section class="parallax" title="Parallax hero section with cosmic background">
+    <div>
+      <h1 data-i18n-key="intro-title">Institutional Change</h1>
+      <p data-i18n-key="intro-text">
+        To safeguard the interests of future generations, our institutions must evolve. This page examines proposals for new offices, inclusive governance and partnerships that empower young voices, protect ecosystems and harness technology for the common good.
+      </p>
+    </div>
+  </section>
+  <main>
+    <div class="card" title="Card on a special envoy for future generations">
+      <h2 data-i18n-key="card1-title">Special Envoy for Future Generations</h2>
+      <div class="content" data-i18n-key="card1-content">
+        <p>
+          A UN policy brief proposes creating a Special Envoy for Future Generations to advocate for long‑term interests, raise awareness of intergenerational impacts, facilitate collaboration and encourage foresight in policymaking【158805180587571†L934-L975】. The envoy would help align national policies with planetary boundaries and ensure that decisions today do not compromise tomorrow.
+        </p>
+        <p>
+          How might such an envoy influence global agendas? What powers and resources would be necessary to make the role effective across different political contexts?
+        </p>
+      </div>
+    </div>
+    <div class="card" title="Card on inclusive institutions and participation">
+      <h2 data-i18n-key="card2-title">Inclusive Institutions & Participation</h2>
+      <div class="content" data-i18n-key="card2-content">
+        <p>
+          Meaningful participation, access to justice and inclusive institutions are foundational for governing on behalf of future generations【158805180587571†L914-L918】. Multi‑stakeholder partnerships can share resources and knowledge to improve life chances for all【158805180587571†L918-L926】. Equality, gender equity and lifelong learning build resilient societies【14871036755630†L3430-L3458】.
+        </p>
+        <p>
+          Consider how to design political processes that amplify marginalised voices, including youth, indigenous peoples and those most affected by climate change. Which mechanisms (citizen assemblies, ombuds offices, participatory budgeting) might ensure that intergenerational equity becomes routine in decision making?
+        </p>
+      </div>
+    </div>
+    <div class="card" title="Card on foresight, science and generational tests">
+      <h2 data-i18n-key="card3-title">Foresight & Generational Tests</h2>
+      <div class="content" data-i18n-key="card3-content">
+        <p>
+          The policy brief calls for better use of foresight, science and data, including improved climate science and strategic foresight【158805180587571†L982-L1014】. Generational tests and long‑term impact monitoring would help policymakers scrutinise how choices affect children and grandchildren【158805180587571†L982-L1014】.
+        </p>
+        <p>
+          What tools and metrics could support such foresight? How can public servants be trained to apply future‑oriented thinking, and how should we balance short‑term needs with long‑term sustainability?
+        </p>
+      </div>
+    </div>
+    <div class="card" title="Card on digital governance and partnerships">
+      <h2 data-i18n-key="card4-title">Digital Governance & Partnerships</h2>
+      <div class="content" data-i18n-key="card4-content">
+        <p>
+          The Global Digital Compact aims to close digital divides, foster digital inclusion, promote safe digital spaces and enhance AI governance【471743158865615†L324-L394】. Proposals include a Global AI Foresight Network and Earth Stewardship Initiative【471743158865615†L324-L394】. Multi‑stakeholder partnerships are crucial to balance innovation with ethics and to ensure data governance respects human rights.
+        </p>
+        <p>
+          Discuss how governments, civil society, indigenous communities and the private sector can collaborate to develop ethical AI, ensure connectivity for all and protect digital commons from exploitation.
+        </p>
+      </div>
+    </div>
+  </main>
+  <div id="hud" title="Lightweight HUD with progress bar, task list and constellation visualiser">
+    <h3 data-i18n-key="hud-title">Progress</h3>
+    <div id="progressBar"><div></div></div>
+    <ul id="tasks" data-i18n-key="hud-tasks">
+      <li data-task-id="special-envoy" data-i18n-key="task1">Summarise functions of the Special Envoy</li>
+      <li data-task-id="inclusive-governance" data-i18n-key="task2">Reflect on inclusive institutions & participation</li>
+      <li data-task-id="foresight" data-i18n-key="task3">Explore foresight & generational tests</li>
+      <li data-task-id="digital-partnerships" data-i18n-key="task4">Identify digital governance & partnerships</li>
+    </ul>
+  </div>
+  <canvas id="constellationCanvas" width="200" height="200" title="Constellation visualiser showing tasks and progress"></canvas>
+  <footer>
+    <h4 id="attributions" data-i18n-key="attr-title">Attributions & Licenses</h4>
+    <p data-i18n-key="attr-text">
+      This page draws on the UN policy brief <em>To Think and Act for Future Generations</em>【158805180587571†L914-L918】【158805180587571†L918-L926】【158805180587571†L934-L975】【158805180587571†L982-L1014】, the EUISS <em>Global Trends to 2030</em> report【14871036755630†L3430-L3458】 and the Stimson Center’s discussion of the Global Digital Compact【471743158865615†L324-L394】. Summaries are provided under fair use for educational discussion. Cosmic imagery generated with OpenAI’s tool.
+    </p>
+    <p data-i18n-key="zero-harm">
+      Zero‑Harm & Anti‑Inversion: Our narrative promotes stewardship over extraction. All data is stored locally; analytics are optional and user‑resettable. Please use the information here to build inclusive institutions, not to marginalise or coerce.
+    </p>
+  </footer>
+  <script>
+    const translations = {
+      en: {
+        'nav-home':'Home','nav-peace':'Peacekeeping Reform','nav-institutions':'Institutional Change','nav-meta':'Meta Chain & Questions','nav-attributions':'Attributions',
+        'search-placeholder':'Search...',
+        'intro-title':'Institutional Change',
+        'intro-text':'To safeguard the interests of future generations, our institutions must evolve. This page examines proposals for new offices, inclusive governance and partnerships that empower young voices, protect ecosystems and harness technology for the common good.',
+        'card1-title':'Special Envoy for Future Generations','card2-title':'Inclusive Institutions & Participation','card3-title':'Foresight & Generational Tests','card4-title':'Digital Governance & Partnerships',
+        'hud-title':'Progress','task1':'Summarise functions of the Special Envoy','task2':'Reflect on inclusive institutions & participation','task3':'Explore foresight & generational tests','task4':'Identify digital governance & partnerships','attr-title':'Attributions & Licenses','attr-text':document.querySelector('footer p').innerHTML,'zero-harm':document.querySelectorAll('footer p')[1].innerHTML
+      },
+      es: {
+        'nav-home':'Inicio','nav-peace':'Reforma del mantenimiento de la paz','nav-institutions':'Cambio institucional','nav-meta':'Cadena meta y preguntas','nav-attributions':'Atribuciones',
+        'search-placeholder':'Buscar...',
+        'intro-title':'Cambio institucional',
+        'intro-text':'Para proteger los intereses de las generaciones futuras, nuestras instituciones deben evolucionar. Esta página examina propuestas para nuevas oficinas, una gobernanza inclusiva y alianzas que empoderan a las voces jóvenes, protegen los ecosistemas y aprovechan la tecnología para el bien común.',
+        'card1-title':'Enviado especial para las generaciones futuras','card2-title':'Instituciones inclusivas y participación','card3-title':'Prospectiva y pruebas generacionales','card4-title':'Gobernanza digital y asociaciones',
+        'hud-title':'Progreso','task1':'Resumir las funciones del enviado especial','task2':'Reflexionar sobre instituciones inclusivas y participación','task3':'Explorar la prospectiva y las pruebas generacionales','task4':'Identificar la gobernanza digital y asociaciones','attr-title':'Atribuciones y licencias','attr-text':document.querySelector('footer p').innerHTML,'zero-harm':document.querySelectorAll('footer p')[1].innerHTML
+      },
+      fr: {
+        'nav-home':'Accueil','nav-peace':'Réforme du maintien de la paix','nav-institutions':'Changement institutionnel','nav-meta':'Chaîne méta et questions','nav-attributions':'Attributions',
+        'search-placeholder':'Recherche...',
+        'intro-title':'Changement institutionnel',
+        'intro-text':'Pour protéger les intérêts des générations futures, nos institutions doivent évoluer. Cette page examine des propositions pour de nouveaux bureaux, une gouvernance inclusive et des partenariats qui responsabilisent les jeunes voix, protègent les écosystèmes et exploitent la technologie pour le bien commun.',
+        'card1-title':'Envoyé spécial pour les générations futures','card2-title':'Institutions inclusives & Participation','card3-title':'Prospective & Tests générationnels','card4-title':'Gouvernance numérique & Partenariats',
+        'hud-title':'Progrès','task1':'Résumer les fonctions de l’envoyé spécial','task2':'Réfléchir aux institutions inclusives & participation','task3':'Explorer la prospective & les tests générationnels','task4':'Identifier la gouvernance numérique & partenariats','attr-title':'Attributions & Licences','attr-text':document.querySelector('footer p').innerHTML,'zero-harm':document.querySelectorAll('footer p')[1].innerHTML
+      },
+      de: {
+        'nav-home':'Startseite','nav-peace':'Friedenssicherung Reform','nav-institutions':'Institutioneller Wandel','nav-meta':'Meta-Kette & Fragen','nav-attributions':'Zuschreibungen',
+        'search-placeholder':'Suche...',
+        'intro-title':'Institutioneller Wandel',
+        'intro-text':'Um die Interessen zukünftiger Generationen zu schützen, müssen sich unsere Institutionen weiterentwickeln. Diese Seite untersucht Vorschläge für neue Ämter, inklusive Governance und Partnerschaften, die junge Stimmen stärken, Ökosysteme schützen und Technologie zum Gemeinwohl nutzen.',
+        'card1-title':'Sonderbeauftragter für zukünftige Generationen','card2-title':'Inklusive Institutionen & Beteiligung','card3-title':'Vorausschau & Generationentests','card4-title':'Digitale Governance & Partnerschaften',
+        'hud-title':'Fortschritt','task1':'Funktionen des Sonderbeauftragten zusammenfassen','task2':'Über inklusive Institutionen & Beteiligung nachdenken','task3':'Vorausschau & Generationentests erkunden','task4':'Digitale Governance & Partnerschaften identifizieren','attr-title':'Zuschreibungen & Lizenzen','attr-text':document.querySelector('footer p').innerHTML,'zero-harm':document.querySelectorAll('footer p')[1].innerHTML
+      }
+    };
+    const languages = ['en','es','fr','de','ru','zh','ar','hi','pt','ja','it','ko','nl','sv','el','tr','fa','vi','id','yo'];
+    const langSelect=document.getElementById('languageSelect');
+    languages.forEach(code=>{const opt=document.createElement('option'); opt.value=code; opt.textContent=code.toUpperCase(); langSelect.appendChild(opt);});
+    let currentLang=localStorage.getItem('preferredLang')||'en';
+    langSelect.value=currentLang;
+    function applyTranslations(){const dict=translations[currentLang]||translations.en; document.querySelectorAll('[data-i18n-key]').forEach(el=>{const key=el.getAttribute('data-i18n-key'); if(dict&&dict[key]){if(el.placeholder){el.placeholder=dict[key];}else{el.innerHTML=dict[key];}}});}
+    langSelect.addEventListener('change',()=>{currentLang=langSelect.value; localStorage.setItem('preferredLang', currentLang); applyTranslations();}); applyTranslations();
+    document.querySelectorAll('.card h2').forEach(header=>{header.addEventListener('click',()=>{header.parentElement.classList.toggle('active');});});
+    document.getElementById('searchInput').addEventListener('input', function(){const term=this.value.trim().toLowerCase(); document.querySelectorAll('.card').forEach(card=>{const content=card.querySelector('.content'); if(!content) return; content.innerHTML=content.innerHTML.replace(/<mark>(.*?)<\/mark>/g, '$1'); if(term==='') return; const regex=new RegExp(`(${term})`,'gi'); content.innerHTML=content.innerHTML.replace(regex,'<mark>$1</mark>');});});
+    let db; const request=indexedDB.open('NextGenDB',1); request.onupgradeneeded=function(event){db=event.target.result; db.createObjectStore('progress',{keyPath:'id'});}; request.onsuccess=function(event){db=event.target.result; markPageVisited('institutions'); loadProgress(); loadTaskStates();}; function markPageVisited(pageId){if(!db) return; const tx=db.transaction('progress','readwrite'); const store=tx.objectStore('progress'); store.put({id:pageId,visited:true});}
+    function loadProgress(){if(!db) return; const tx=db.transaction('progress','readonly'); const store=tx.objectStore('progress'); store.getAll().onsuccess=function(e){const visited=e.target.result.filter(item=>item.visited).length; const total=4; const progress=Math.round((visited/total)*100); document.querySelector('#progressBar div').style.width=progress+'%';};}
+    document.querySelectorAll('#tasks li').forEach(item=>{item.addEventListener('click',()=>{item.classList.toggle('completed'); saveTaskState(item.getAttribute('data-task-id'), item.classList.contains('completed'));});}); function saveTaskState(taskId, completed){if(!db) return; const tx=db.transaction('progress','readwrite'); const store=tx.objectStore('progress'); store.put({id:taskId,completed:completed});}
+    function loadTaskStates(){if(!db) return; const tx=db.transaction('progress','readonly'); const store=tx.objectStore('progress'); document.querySelectorAll('#tasks li').forEach(item=>{const id=item.getAttribute('data-task-id'); store.get(id).onsuccess=function(e){if(e.target.result&&e.target.result.completed){item.classList.add('completed');}};});}
+    const canvas=document.getElementById('constellationCanvas'); const ctx=canvas.getContext('2d'); const stars=[]; const starCount=12; for(let i=0;i<starCount;i++){stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, vx:(Math.random()-0.5)*0.5, vy:(Math.random()-0.5)*0.5});} function animate(){ctx.clearRect(0,0,canvas.width,canvas.height); for(let i=0;i<starCount;i++){const s=stars[i]; s.x+=s.vx; s.y+=s.vy; if(s.x<0||s.x>canvas.width) s.vx*=-1; if(s.y<0||s.y>canvas.height) s.vy*=-1; ctx.beginPath(); ctx.arc(s.x, s.y, 2, 0, Math.PI*2); ctx.fillStyle='#005691'; ctx.fill(); for(let j=i+1;j<starCount;j++){const s2=stars[j]; const dist=Math.hypot(s.x-s2.x, s.y-s2.y); if(dist<50){ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(s2.x,s2.y); ctx.strokeStyle='rgba(0,86,145,'+(1-dist/50)+')'; ctx.lineWidth=0.5; ctx.stroke();}}} requestAnimationFrame(animate);} animate();
+  </script>
+</body>
+</html>

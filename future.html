@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Next Gen Challenge – Meta Prompt Chain & Future Questions</title>
+  <style>
+    /* Reuse styles from previous pages for consistency */
+    body, html { margin:0; padding:0; font-family:sans-serif; color:#222; background:#fdfdfd; height:100%; overflow-x:hidden; }
+    #splash { position:fixed; top:0; left:0; right:0; bottom:0; z-index:9999; background:#000; display:flex; align-items:center; justify-content:center; flex-direction:column; color:#fff; animation: fadeOut 2s ease forwards 2s; }
+    @keyframes fadeOut { to { opacity:0; visibility:hidden; } }
+    nav { position:sticky; top:0; background:rgba(255,255,255,0.9); backdrop-filter:blur(4px); display:flex; align-items:center; padding:10px; z-index:1000; border-bottom:1px solid #ddd; }
+    nav a { margin-right:20px; text-decoration:none; color:#005691; font-weight:bold; }
+    nav a:hover { text-decoration:underline; }
+    #searchBar { margin-left:auto; position:relative; }
+    #searchInput { padding:6px; border:1px solid #ccc; border-radius:4px; }
+    .parallax { position:relative; height:50vh; background-image:url('a3d099d2-79d2-47bb-9c75-c3dc24d73a04.png'); background-size:cover; background-attachment:fixed; background-position:center; color:#fff; display:flex; align-items:center; justify-content:center; text-align:center; }
+    .parallax h1 { font-size:2.5em; margin:0; text-shadow:2px 2px 8px rgba(0,0,0,0.7); }
+    .parallax p { max-width:700px; margin:10px auto 0; line-height:1.4; font-size:1.1em; text-shadow:1px 1px 4px rgba(0,0,0,0.5); }
+    main { padding:20px; max-width:900px; margin:auto; }
+    .card { background:#fff; border-radius:6px; border:1px solid #ccc; margin-bottom:15px; overflow:hidden; }
+    .card h2 { margin:0; padding:15px; background:#f5f5f5; cursor:pointer; position:relative; }
+    .card h2::after { content:'+'; position:absolute; right:20px; top:50%; transform:translateY(-50%); font-size:1.2em; }
+    .card.active h2::after { content:'–'; }
+    .card .content { padding:15px; display:none; }
+    .card.active .content { display:block; }
+    #hud { position:fixed; right:10px; bottom:10px; background:rgba(255,255,255,0.9); border:1px solid #ccc; border-radius:6px; padding:10px; width:250px; z-index:1001; font-size:0.9em; }
+    #hud h3 { margin-top:0; font-size:1em; color:#005691; }
+    #progressBar { height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden; margin-bottom:5px; }
+    #progressBar div { height:100%; width:0; background:linear-gradient(90deg,#4caf50,#81c784); transition:width 0.5s; }
+    #tasks { list-style:none; padding-left:0; margin:5px 0 0; max-height:150px; overflow-y:auto; }
+    #tasks li { margin-bottom:5px; padding-left:20px; position:relative; cursor:pointer; }
+    #tasks li::before { content:'\u25CB'; position:absolute; left:0; top:0; color:#999; }
+    #tasks li.completed::before { content:'\u25C9'; color:#4caf50; }
+    #constellationCanvas { position:fixed; bottom:0; left:0; width:200px; height:200px; z-index:1000; }
+    footer { margin-top:30px; padding:20px; background:#f5f5f5; font-size:0.9em; color:#333; border-top:1px solid #ddd; }
+    footer h4 { margin-top:0; }
+    footer a { color:#005691; text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+    @media (max-width:600px) { nav { flex-wrap:wrap; } #hud { width:90%; left:5%; right:5%; } .parallax h1 { font-size:2em; } }
+  </style>
+</head>
+<body>
+  <div id="splash" title="Animated splash screen to welcome readers and hint at cosmic themes">
+    <h1>Preparing insight...</h1>
+    <p>Please wait while we initialise the experience.</p>
+  </div>
+  <nav title="Sticky navigation bar letting you move between sections and other pages">
+    <a href="index.html" data-i18n-key="nav-home">Home</a>
+    <a href="peacekeeping.html" data-i18n-key="nav-peace">Peacekeeping Reform</a>
+    <a href="institutions.html" data-i18n-key="nav-institutions">Institutional Change</a>
+    <a href="future.html" data-i18n-key="nav-meta">Meta Chain & Questions</a>
+    <a href="#attributions" data-i18n-key="nav-attributions">Attributions</a>
+    <div id="searchBar" title="Client-side search; type to highlight words in open cards">
+      <input id="searchInput" type="text" placeholder="Search..." data-i18n-key="search-placeholder" />
+    </div>
+    <select id="languageSelect" title="Choose language; UI elements will update accordingly"></select>
+  </nav>
+  <section class="parallax" title="Parallax hero section with cosmic background">
+    <div>
+      <h1 data-i18n-key="intro-title">Meta Prompt Chain & Future Questions</h1>
+      <p data-i18n-key="intro-text">
+        This final page synthesises the insights from previous sections into a meta prompt chain – a structured set of questions designed to help you explore and solve the challenges facing future generations. It also highlights overlooked issues and invites you to ask your own questions.
+      </p>
+    </div>
+  </section>
+  <main>
+    <div class="card" title="Card outlining the meta prompt chain">
+      <h2 data-i18n-key="card1-title">Meta Prompt Chain</h2>
+      <div class="content" data-i18n-key="card1-content">
+        <p>
+          A meta prompt chain is a sequence of guiding questions that build upon each other to tackle a complex problem. For the next generation, such a chain might look like:
+        </p>
+        <ol>
+          <li><strong>Identify global challenges:</strong> Gather data on seismic power shifts, technological risks, inequality, climate change and digital divides. What trends and crises will most affect those born after 2020【14871036755630†L91-L103】【158805180587571†L882-L906】?</li>
+          <li><strong>Deep dive per domain:</strong> For each challenge, explore root causes, current trajectories and impacts on peace, health and livelihoods. How do these drivers intersect, and where are the leverage points for change?</li>
+          <li><strong>Reform peacekeeping:</strong> Examine the identity crisis in UN peace operations and propose reforms grounded in consent, impartiality and non‑use of force【126879280082271†L165-L260】. How can demilitarisation and normative convergence shape missions【182919173124926†L150-L176】【182919173124926†L331-L346】?</li>
+          <li><strong>Reshape institutions:</strong> Design institutions that include a Special Envoy for Future Generations【158805180587571†L934-L975】, create participatory mechanisms【158805180587571†L914-L918】, leverage foresight and generational tests【158805180587571†L982-L1014】, and govern digital technologies responsibly【471743158865615†L324-L394】.</li>
+          <li><strong>Integrate and iterate:</strong> Combine insights to propose cross‑cutting solutions that address equality, sustainability and innovation simultaneously. What norms, accountability structures and financial incentives are needed【182919173124926†L331-L346】?</li>
+          <li><strong>Ask what’s missing:</strong> At each step, question which voices, species or systems may be overlooked. Mental health, biodiversity, cultural heritage and intergenerational equity deserve attention. How might these factors influence your strategy?</li>
+        </ol>
+        <p>
+          Use this chain as a scaffold for your own inquiry or to design prompts for an AI assistant. As you refine each question, you’ll uncover new areas of concern and opportunity.
+        </p>
+      </div>
+    </div>
+    <div class="card" title="Card discussing overlooked issues and cross‑cutting themes">
+      <h2 data-i18n-key="card2-title">Overlooked Issues & Cross‑Cutting Themes</h2>
+      <div class="content" data-i18n-key="card2-content">
+        <p>
+          Beyond geopolitics, technology and climate, numerous issues threaten the wellbeing of future generations. Biodiversity loss erodes ecosystem resilience and cultural ties; mental health crises undermine social cohesion; and unequal access to education limits human potential. Inclusion of indigenous knowledge and respect for cultural heritage enriches policy design.
+        </p>
+        <p>
+          Identify which of these themes are absent from current strategies. How might mental health, ecological stewardship and cultural diversity be woven into peacebuilding and institutional reform? Are there emerging risks (e.g., nanotechnology, space debris) that require proactive norms and safeguards?
+        </p>
+      </div>
+    </div>
+    <div class="card" title="Card integrating solutions and stewardship">
+      <h2 data-i18n-key="card3-title">Integrated Solutions & Stewardship</h2>
+      <div class="content" data-i18n-key="card3-content">
+        <p>
+          Integrated solutions recognise that human and planetary wellbeing are compatible and mutually reinforcing【182919173124926†L331-L346】. A declaration for future generations might assert that humans—not machines—should take the most consequential decisions, that planetary stewardship must guide economic activity and that financial flows should reflect a collective interest in peace【182919173124926†L331-L346】.
+        </p>
+        <p>
+          Discuss how policies can simultaneously reduce inequality, cut emissions, enhance digital inclusion and promote mental health. What governance models enable such holistic stewardship, and how can they be funded and scaled?
+        </p>
+      </div>
+    </div>
+    <div class="card" title="Card inviting personal questions and future exploration">
+      <h2 data-i18n-key="card4-title">Call to Action & Further Questions</h2>
+      <div class="content" data-i18n-key="card4-content">
+        <p>
+          This journey does not end here. The next generation’s challenges are complex and evolving. Use the meta prompt chain to formulate your own questions: What issues matter most to you? Which communities need to be heard? How can you contribute to building institutions and technologies that serve peace and justice?
+        </p>
+        <p>
+          Record your reflections in a journal, discuss them with peers or develop prompts to guide an AI in researching solutions. Remember that curiosity, empathy and foresight are the most powerful tools for designing a future that honours all beings.
+        </p>
+      </div>
+    </div>
+  </main>
+  <div id="hud" title="Lightweight HUD with progress bar, task list and constellation visualiser">
+    <h3 data-i18n-key="hud-title">Progress</h3>
+    <div id="progressBar"><div></div></div>
+    <ul id="tasks" data-i18n-key="hud-tasks">
+      <li data-task-id="map-chain" data-i18n-key="task1">Map the meta prompt chain</li>
+      <li data-task-id="spot-overlooked" data-i18n-key="task2">Identify overlooked issues & themes</li>
+      <li data-task-id="integrate-solutions" data-i18n-key="task3">Propose integrated stewardship solutions</li>
+      <li data-task-id="personal-prompts" data-i18n-key="task4">Formulate your own questions & actions</li>
+    </ul>
+  </div>
+  <canvas id="constellationCanvas" width="200" height="200" title="Constellation visualiser showing tasks and progress"></canvas>
+  <footer>
+    <h4 id="attributions" data-i18n-key="attr-title">Attributions & Licenses</h4>
+    <p data-i18n-key="attr-text">
+      This summary synthesises insights from the EUISS report【14871036755630†L91-L103】【14871036755630†L3430-L3458】, DIIS and UNU briefs【126879280082271†L165-L260】【182919173124926†L150-L176】【182919173124926†L331-L346】, the UN policy brief【158805180587571†L914-L918】【158805180587571†L934-L975】【158805180587571†L982-L1014】, and the Stimson Center discussion【471743158865615†L324-L394】. It also adds reflections on mental health, biodiversity and cultural heritage. Use these references to explore further. Cosmic artwork created by OpenAI’s image tool.
+    </p>
+    <p data-i18n-key="zero-harm">
+      Zero‑Harm & Anti‑Inversion: This platform respects privacy and encourages mindful engagement. All analytics are local and optional; no data leaves your device. Use the insights here to foster empathy and stewardship rather than extraction or coercion.
+    </p>
+  </footer>
+  <script>
+    const translations = {
+      en: {
+        'nav-home':'Home','nav-peace':'Peacekeeping Reform','nav-institutions':'Institutional Change','nav-meta':'Meta Chain & Questions','nav-attributions':'Attributions',
+        'search-placeholder':'Search...',
+        'intro-title':'Meta Prompt Chain & Future Questions',
+        'intro-text':'This final page synthesises the insights from previous sections into a meta prompt chain – a structured set of questions designed to help you explore and solve the challenges facing future generations. It also highlights overlooked issues and invites you to ask your own questions.',
+        'card1-title':'Meta Prompt Chain','card2-title':'Overlooked Issues & Cross‑Cutting Themes','card3-title':'Integrated Solutions & Stewardship','card4-title':'Call to Action & Further Questions',
+        'hud-title':'Progress','task1':'Map the meta prompt chain','task2':'Identify overlooked issues & themes','task3':'Propose integrated stewardship solutions','task4':'Formulate your own questions & actions','attr-title':'Attributions & Licenses','attr-text':document.querySelector('footer p').innerHTML,'zero-harm':document.querySelectorAll('footer p')[1].innerHTML
+      },
+      es: {
+        'nav-home':'Inicio','nav-peace':'Reforma del mantenimiento de la paz','nav-institutions':'Cambio institucional','nav-meta':'Cadena meta y preguntas','nav-attributions':'Atribuciones',
+        'search-placeholder':'Buscar...',
+        'intro-title':'Cadena de metapreguntas y preguntas futuras',
+        'intro-text':'Esta página final sintetiza las ideas de las secciones anteriores en una cadena de metapreguntas, un conjunto estructurado de preguntas diseñado para ayudarle a explorar y resolver los desafíos que enfrentan las generaciones futuras. También destaca temas pasados por alto y le invita a formular sus propias preguntas.',
+        'card1-title':'Cadena de metapreguntas','card2-title':'Cuestiones pasadas por alto y temas transversales','card3-title':'Soluciones integradas y custodia','card4-title':'Llamado a la acción y más preguntas',
+        'hud-title':'Progreso','task1':'Mapear la cadena de metapreguntas','task2':'Identificar temas olvidados','task3':'Proponer soluciones de custodia integradas','task4':'Formular sus propias preguntas y acciones','attr-title':'Atribuciones y licencias','attr-text':document.querySelector('footer p').innerHTML,'zero-harm':document.querySelectorAll('footer p')[1].innerHTML
+      },
+      fr: {
+        'nav-home':'Accueil','nav-peace':'Réforme du maintien de la paix','nav-institutions':'Changement institutionnel','nav-meta':'Chaîne méta et questions','nav-attributions':'Attributions',
+        'search-placeholder':'Recherche...',
+        'intro-title':'Chaîne de métademandes et questions futures',
+        'intro-text':'Cette dernière page synthétise les idées des sections précédentes en une chaîne de métademandes, un ensemble structuré de questions conçu pour vous aider à explorer et à résoudre les défis auxquels sont confrontées les générations futures. Elle souligne également des thèmes négligés et vous invite à poser vos propres questions.',
+        'card1-title':'Chaîne de métademandes','card2-title':'Problèmes négligés et thèmes transversaux','card3-title':'Solutions intégrées & Gouvernance','card4-title':'Appel à l’action et autres questions',
+        'hud-title':'Progrès','task1':'Cartographier la chaîne de métademandes','task2':'Identifier les sujets oubliés','task3':'Proposer des solutions intégrées','task4':'Formuler vos propres questions et actions','attr-title':'Attributions & Licences','attr-text':document.querySelector('footer p').innerHTML,'zero-harm':document.querySelectorAll('footer p')[1].innerHTML
+      },
+      de: {
+        'nav-home':'Startseite','nav-peace':'Friedenssicherung Reform','nav-institutions':'Institutioneller Wandel','nav-meta':'Meta-Kette & Fragen','nav-attributions':'Zuschreibungen',
+        'search-placeholder':'Suche...',
+        'intro-title':'Meta-Fragenkette & zukünftige Fragen',
+        'intro-text':'Diese letzte Seite fasst die Erkenntnisse der vorangegangenen Abschnitte in einer Meta-Fragenkette zusammen – einer strukturierten Reihe von Fragen, die Ihnen helfen soll, die Herausforderungen zukünftiger Generationen zu erforschen und zu lösen. Sie hebt auch übersehene Themen hervor und lädt Sie ein, Ihre eigenen Fragen zu stellen.',
+        'card1-title':'Meta-Fragenkette','card2-title':'Übersehene Themen & Querschnittsthemen','card3-title':'Integrierte Lösungen & Stewardship','card4-title':'Aufruf zum Handeln & weitere Fragen',
+        'hud-title':'Fortschritt','task1':'Die Meta-Fragenkette abbilden','task2':'Übersehene Themen identifizieren','task3':'Integrierte Stewardship-Lösungen vorschlagen','task4':'Eigene Fragen & Handlungen formulieren','attr-title':'Zuschreibungen & Lizenzen','attr-text':document.querySelector('footer p').innerHTML,'zero-harm':document.querySelectorAll('footer p')[1].innerHTML
+      }
+    };
+    const languages = ['en','es','fr','de','ru','zh','ar','hi','pt','ja','it','ko','nl','sv','el','tr','fa','vi','id','yo'];
+    const langSelect=document.getElementById('languageSelect');
+    languages.forEach(code=>{const opt=document.createElement('option'); opt.value=code; opt.textContent=code.toUpperCase(); langSelect.appendChild(opt);});
+    let currentLang=localStorage.getItem('preferredLang')||'en'; langSelect.value=currentLang;
+    function applyTranslations(){const dict=translations[currentLang]||translations.en; document.querySelectorAll('[data-i18n-key]').forEach(el=>{const key=el.getAttribute('data-i18n-key'); if(dict&&dict[key]){if(el.placeholder){el.placeholder=dict[key];}else{el.innerHTML=dict[key];}}});}
+    langSelect.addEventListener('change',()=>{currentLang=langSelect.value; localStorage.setItem('preferredLang', currentLang); applyTranslations();}); applyTranslations();
+    document.querySelectorAll('.card h2').forEach(header=>{header.addEventListener('click',()=>{header.parentElement.classList.toggle('active');});});
+    document.getElementById('searchInput').addEventListener('input',function(){const term=this.value.trim().toLowerCase(); document.querySelectorAll('.card').forEach(card=>{const content=card.querySelector('.content'); if(!content) return; content.innerHTML=content.innerHTML.replace(/<mark>(.*?)<\/mark>/g,'$1'); if(term==='') return; const regex=new RegExp(`(${term})`,'gi'); content.innerHTML=content.innerHTML.replace(regex,'<mark>$1</mark>');});});
+    let db; const request=indexedDB.open('NextGenDB',1); request.onupgradeneeded=function(event){db=event.target.result; db.createObjectStore('progress',{keyPath:'id'});} ; request.onsuccess=function(event){db=event.target.result; markPageVisited('future'); loadProgress(); loadTaskStates();}; function markPageVisited(pageId){if(!db) return; const tx=db.transaction('progress','readwrite'); const store=tx.objectStore('progress'); store.put({id:pageId, visited:true});}
+    function loadProgress(){if(!db) return; const tx=db.transaction('progress','readonly'); const store=tx.objectStore('progress'); store.getAll().onsuccess=function(e){const visited=e.target.result.filter(item=>item.visited).length; const total=4; const progress=Math.round((visited/total)*100); document.querySelector('#progressBar div').style.width=progress+'%';};}
+    document.querySelectorAll('#tasks li').forEach(item=>{item.addEventListener('click',()=>{item.classList.toggle('completed'); saveTaskState(item.getAttribute('data-task-id'), item.classList.contains('completed'));});}); function saveTaskState(taskId, completed){if(!db) return; const tx=db.transaction('progress','readwrite'); const store=tx.objectStore('progress'); store.put({id:taskId, completed:completed});}
+    function loadTaskStates(){if(!db) return; const tx=db.transaction('progress','readonly'); const store=tx.objectStore('progress'); document.querySelectorAll('#tasks li').forEach(item=>{const id=item.getAttribute('data-task-id'); store.get(id).onsuccess=function(e){if(e.target.result&&e.target.result.completed){item.classList.add('completed');}};});}
+    const canvas=document.getElementById('constellationCanvas'); const ctx=canvas.getContext('2d'); const stars=[]; const starCount=12; for(let i=0;i<starCount;i++){stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-0.5)*0.5,vy:(Math.random()-0.5)*0.5});} function animate(){ctx.clearRect(0,0,canvas.width,canvas.height); for(let i=0;i<starCount;i++){const s=stars[i]; s.x+=s.vx; s.y+=s.vy; if(s.x<0||s.x>canvas.width) s.vx*=-1; if(s.y<0||s.y>canvas.height) s.vy*=-1; ctx.beginPath(); ctx.arc(s.x,s.y,2,0,Math.PI*2); ctx.fillStyle='#005691'; ctx.fill(); for(let j=i+1;j<starCount;j++){const s2=stars[j]; const dist=Math.hypot(s.x-s2.x,s.y-s2.y); if(dist<50){ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(s2.x,s2.y); ctx.strokeStyle='rgba(0,86,145,'+(1-dist/50)+')'; ctx.lineWidth=0.5; ctx.stroke();}}} requestAnimationFrame(animate);} animate();
+  </script>
+</body>
+</html>
