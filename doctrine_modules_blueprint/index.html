@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<!--
+  Zero‑Harm and Anti‑Inversion Note: This document is a self‑contained blueprint for next‑generation doctrine modules. It implements frameworks that prioritise ceasefire mechanics, civilian protection, verification, narrative hygiene, climate resilience, data protection and mental health. All analytics are local, optional and resettable. No data leaves the browser without the user's consent. Inputs are sanitized and rate‑limited. Do not repurpose any part of this file for harm or coercion.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctrine Modules Blueprint</title>
+  <style>
+    /* General Reset */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.6;
+      color:#333;
+      overflow-x:hidden;
+    }
+    /* Splash Screen */
+    #splash{
+      position:fixed;top:0;left:0;width:100%;height:100%;background:#0a3d62;
+      color:#fff;display:flex;justify-content:center;align-items:center;
+      flex-direction:column;z-index:1000;transition:opacity 0.6s ease;
+    }
+    #splash.fade-out{opacity:0;pointer-events:none;}
+    #splash h1{font-size:2.5rem;margin-bottom:0.5rem;}
+    #splash p{font-size:1rem;}
+
+    /* Header & Navigation */
+    header{
+      position:relative;
+      background:#1e3799;
+      color:#fff;
+      padding:1rem;
+      text-align:center;
+    }
+    nav{
+      position:sticky;
+      top:0;
+      background:#4a69bd;
+      padding:0.5rem;
+      z-index:999;
+    }
+    nav ul{display:flex;flex-wrap:wrap;justify-content:center;list-style:none;}
+    nav li{margin:0.3rem;}
+    nav a{
+      color:#fff;
+      text-decoration:none;
+      padding:0.5rem 0.8rem;
+      border-radius:4px;
+      background:#4a69bd;
+      transition:background 0.3s;
+    }
+    nav a:hover,nav a.active{background:#1e3799;}
+
+    /* Parallax Sections */
+    section{
+      padding:2rem 1rem;
+      min-height:100vh;
+      scroll-margin-top:60px;
+      position:relative;
+    }
+    .parallax{
+      background-attachment:fixed;
+      background-size:cover;
+      background-position:center;
+      color:#fff;
+    }
+    .module{
+      background:rgba(0,0,0,0.6);
+      padding:1rem;
+      border-radius:8px;
+    }
+    /* Collapsible Content */
+    details{margin-bottom:1rem;border:1px solid #ccc;border-radius:4px;background:#f7f7f7;color:#333;}
+    summary{padding:0.8rem;cursor:pointer;font-weight:bold;background:#e1e8f0;}
+    details[open] summary{background:#d4dce8;}
+    details div{padding:0.8rem;}
+
+    /* HUD */
+    #hud{
+      position:fixed;
+      top:10px;
+      right:10px;
+      background:#fff;
+      padding:0.8rem;
+      border-radius:8px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.2);
+      z-index:998;
+      width:180px;
+      font-size:0.9rem;
+    }
+    #hud h3{margin-bottom:0.5rem;text-align:center;color:#1e3799;}
+    #hud ul{list-style:none;}
+    #hud li{margin-bottom:0.3rem;display:flex;justify-content:space-between;}
+    #hud button{margin-top:0.5rem;width:100%;padding:0.4rem;border:none;background:#1e3799;color:#fff;border-radius:4px;cursor:pointer;}
+    #hud button:hover{background:#4a69bd;}
+
+    /* Constellation Canvas */
+    #constellation{
+      position:fixed;
+      bottom:10px;
+      left:50%;
+      transform:translateX(-50%);
+      width:300px;
+      height:180px;
+      background:#f0f4f8;
+      border:1px solid #ccd6e8;
+      border-radius:8px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.1);
+      z-index:995;
+    }
+
+    /* Search Bar */
+    #search-bar{
+      margin:1rem auto;
+      max-width:400px;
+      display:flex;
+    }
+    #search-bar input{
+      width:100%;
+      padding:0.6rem;
+      border:1px solid #ccc;
+      border-radius:4px;
+    }
+
+    /* Language Selector */
+    #language-selector{
+      position:fixed;
+      bottom:10px;
+      right:10px;
+      z-index:999;
+      background:#fff;
+      border:1px solid #ccc;
+      border-radius:4px;
+      padding:0.5rem;
+    }
+
+    /* Print Stylesheet */
+    @media print{
+      nav, #hud, #constellation, #language-selector, #splash{display:none;}
+      body{font-size:12pt;color:#000;}
+      details{display:block!important;}
+    }
+
+    /* Noscript Fallback */
+    .no-js-warning{
+      background:#ffdd57;
+      color:#333;
+      padding:1rem;
+      text-align:center;
+    }
+  </style>
+</head>
+<body>
+  <noscript>
+    <div class="no-js-warning">
+      JavaScript is disabled. The interactive features of this doctrine blueprint will be unavailable. However, the full text of each module and attributions remain accessible.
+    </div>
+  </noscript>
+  <!-- Splash Screen -->
+  <div id="splash">
+    <h1>Doctrine Modules</h1>
+    <p>Building Blueprints for Peace, Protection & Resilience</p>
+  </div>
+
+  <!-- Gamification HUD -->
+  <div id="hud">
+    <h3>Progress HUD</h3>
+    <ul id="hud-list">
+      <!-- Populated dynamically -->
+    </ul>
+    <button id="reset-progress">Reset Progress</button>
+  </div>
+
+  <!-- Constellation Visualizer -->
+  <canvas id="constellation"></canvas>
+
+  <!-- Language Selector -->
+  <div id="language-selector">
+    <label for="language">Language:</label>
+    <select id="language"></select>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <h1>Doctrine Modules Blueprint</h1>
+    <p>Toward Sustainable Peace & Human Flourishing</p>
+  </header>
+
+  <!-- Navigation -->
+  <nav>
+    <ul id="nav-list">
+      <li><a href="#ceasefire">Ceasefire Mechanics</a></li>
+      <li><a href="#civilian">Civilian Protection</a></li>
+      <li><a href="#verification">Verification & Monitoring</a></li>
+      <li><a href="#narrative">Narrative Hygiene</a></li>
+      <li><a href="#climate">Climate Resilience</a></li>
+      <li><a href="#data">Data Protection</a></li>
+      <li><a href="#mental">Mental Health</a></li>
+      <li><a href="#attributions">Attributions</a></li>
+    </ul>
+  </nav>
+
+  <!-- Search Bar -->
+  <div id="search-bar">
+    <input type="text" id="search" placeholder="Search modules...">
+  </div>
+
+  <!-- Ceasefire Mechanics Section -->
+  <section id="ceasefire" class="parallax" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTAwMCcgaGVpZ2h0PSc2MDAnIHZpZXdCb3g9JzAgMCAxMDAwIDYwMCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIGdyYWRpZW50VHJhbnNmb3JtPSd0cmFuc2xhdGUoMCwwKSc+PHN0b3Agc3RvcC1jb2xvcj0nI2FlY2UyZicgb2Zmc2V0PScwJScvPjxzdG9wIHN0b3AtY29sb3I9JyNmNmY3YmYnIG9mZnNldD0nMTAwJScvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGZpbGw9J3VybCgjZykniCBkPSdNMCAwaDEwMDB2NjAwSDB6Jy8+PHBhdGggZmlsbD0nI2ZmZmZmZicgZD0nTTAuNSA0NjBjMTUwLTE1MCAyNTAgLTUwIDI4MCAtMTMwczkwIC0yNDAgMjMwIC0yOTBjMTMwIC01MCAyNDAgNTAgMjg4IDEyMHM5MCAzNDAgMjMwIDQwMHMxNTAgMTUwIDAgMzAwIC0yNTAgMjMwIC0zMDAtMjk4cy05MCAtMjgwIC0yMzAgLTMyMHQtMjkwIC0xMDBzLTEyMCAyODAgLTYwIDQwMHMtMTUwIDM4MCAtMzMwIDQwMHMtMzIwIC0yMjAgLTMxMCAtMTAxLjV6JyBvcGFjaXR5PScwLjUnLz48L3N2Zz4=');">
+    <div class="module" data-keywords="ceasefire,peace,conflict,monitoring,political settlement">
+      <h2>Ceasefire Mechanics</h2>
+      <p>This module offers a reusable template to design ceasefire agreements that promote durable peace. It draws on lessons from successful ceasefire arrangements, highlighting rules of engagement, joint monitoring, accountability and the political context.</p>
+      <details>
+        <summary>Key Elements & Procedures</summary>
+        <div>
+          <ul>
+            <li><strong>Define Rules & Procedures:</strong> Establish clear rules for disengagement, disarmament schedules, permitted activities, demobilization and humanitarian corridors. These rules must respect international humanitarian law and outline what is prohibited【751952177289607†L118-L123】.</li>
+            <li><strong>Joint Monitoring & Verification:</strong> Create a commission composed of representatives from all parties and neutral observers. This body monitors compliance, investigates incidents, coordinates humanitarian access and resolves disputes【751952177289607†L145-L164】.</li>
+            <li><strong>Ownership & Accountability:</strong> Involve local stakeholders and civil society. Ensure accountability mechanisms that link ceasefire violations to political consequences and sanctions【751952177289607†L189-L199】.</li>
+            <li><strong>Political Consent & Linkages:</strong> Secure consent of conflict parties and connect the ceasefire to a broader political settlement. Recognize the primacy of politics and embed the ceasefire in a roadmap toward lasting peace【751952177289607†L213-L223】【897556446669716†L97-L121】.</li>
+          </ul>
+          <p>Use this template to generate checklists, schedules and verification protocols. The joint commission should have dedicated resources and access to dispute resolution channels. Incorporate inclusive participation of women and marginalised groups【897556446669716†L116-L129】.</p>
+          <button class="complete-btn" data-module="ceasefire">Mark as Complete</button>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- Civilian Protection Section -->
+  <section id="civilian" class="parallax" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTAwMCcgaGVpZ2h0PSc2MDAnIHZpZXdCb3g9JzAgMCAxMDAwIDYwMCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2JnJyBncmFkaWVudFRyYW5zZm9ybT0ndHJhbnNsYXRlKDApJyByb3RhdGUoOTApPjxyZWN0IGZpbGw9J3VybCgjZ2cpJyB3aWR0aD0nMTAwMCcgaGVpZ2h0PSc2MDAnIC8+PHN0b3Agc3RvcC1jb2xvcj0nI2Q0ZWY5OScgb2Zmc2V0PScwJScvPjxzdG9wIHN0b3AtY29sb3I9JyNmZmU2NWInIG9mZnNldD0nMTAwJScvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGZpbGw9J3VybCgjYmcpJyBkPSdNMCBoNjAwIHYtMTAwIGgxMDAwdjQyMHptMC0zMGgxMDAwaDQxMHMwIDgwLTYwMCAxMDB6JyBvcGFjaXR5PScwLjUnLz48L3N2Zz4=');">
+    <div class="module" data-keywords="civilian protection,explosive weapons,humanitarian,principles">
+      <h2>Civilian Protection & Assistance</h2>
+      <p>This module translates the Political Declaration on Explosive Weapons in Populated Areas and other humanitarian frameworks into concrete actions. It focuses on reducing harm and aiding victims during conflicts.</p>
+      <details>
+        <summary>Implementation Principles</summary>
+        <div>
+          <ul>
+            <li><strong>Humanitarian Focus:</strong> Apply a comprehensive humanitarian lens that prioritises human life at every stage. States should go beyond minimal compliance and actively work to reduce civilian casualties and assist victims【705677553384605†L146-L154】【705677553384605†L169-L170】.</li>
+            <li><strong>Progressive & Collaborative:</strong> Implement progressive measures that exceed existing obligations and encourage collaboration among states, armed actors, humanitarians and affected communities【705677553384605†L169-L189】.</li>
+            <li><strong>Data‑Informed & Transparent:</strong> Collect reliable data on the use of explosive weapons, share findings publicly and base decisions on evidence【705677553384605†L169-L189】.</li>
+            <li><strong>Internalisation & Promotion:</strong> Incorporate commitments into military doctrine, train personnel accordingly and advocate for universal adherence to the Declaration【705677553384605†L169-L189】.</li>
+          </ul>
+          <p>Use these principles to design standard operating procedures, training programmes and victim assistance schemes. Prioritise local knowledge and ensure transparency in casualty reporting.</p>
+          <button class="complete-btn" data-module="civilian">Mark as Complete</button>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- Verification & Monitoring Section -->
+  <section id="verification" class="parallax" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTAwMCcgaGVpZ2h0PSc2MDAnIHZpZXdCb3g9JzAgMCAxMDAwIDYwMCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cmFkaWFsR3JhZGllbnQgaWQ9InIiIGN4PSI1MDAiIGN5PSI1MDAiIHI9IjUwMCI+PGZha2VMaW5lIGlkPSIxIiB4MT0iMCIgeTE9IjAiIHgyPSIxMDAwIiB5Mj0iMCIvPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNlMWUxZTEiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmMWYzZjMiLz48L3JhZGlhbEdyYWRpZW50PjxyZWN0IGZpbGw9InVybCgjcikiIHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjYwMCIvPjwvc3ZnPg==');">
+    <div class="module" data-keywords="verification,monitoring,commissions,inclusion">
+      <h2>Verification & Monitoring</h2>
+      <p>Effective verification ensures compliance with agreements and builds trust among parties. This module offers frameworks for monitoring ceasefires, humanitarian access and human rights.</p>
+      <details>
+        <summary>Guidelines & Inclusion</summary>
+        <div>
+          <ul>
+            <li><strong>Planning & Resources:</strong> Develop clear monitoring plans with defined tasks, timelines and budgets. Appoint joint teams with gender balance and experts from relevant fields【897556446669716†L97-L121】.</li>
+            <li><strong>Tools & Mechanisms:</strong> Deploy technology (satellite imagery, UAVs, secure communications) alongside community‑based reporting systems. Protect monitors and ensure their access across frontlines【897556446669716†L97-L121】.</li>
+            <li><strong>Inclusion & Participation:</strong> Ensure the voices of women, youth and minorities are represented in monitoring bodies. Inclusive processes improve legitimacy and conflict sensitivity【897556446669716†L116-L129】.</li>
+            <li><strong>Dispute Resolution:</strong> Provide escalation pathways from field monitors to political leadership. Use arbitration panels and restorative justice mechanisms to address violations.</li>
+          </ul>
+          <p>This template can help practitioners design verification protocols, recruit monitors and build inclusive governance structures.</p>
+          <button class="complete-btn" data-module="verification">Mark as Complete</button>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- Narrative Hygiene Section -->
+  <section id="narrative" class="parallax" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTAwMCcgaGVpZ2h0PSc2MDAnIHZpZXdCb3g9JzAgMCAxMDAwIDYwMCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cmVjdCB3aWR0aD0nMTAwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9JyNmMGYxZjYnIC8+PHBhdGggZmlsbD0iI2RjZGRlMSIgZD0nTSAwIDAgTCAxMDAwIDYwMCAnIGZpbGwtb3BhY2l0eT0nMC4zJyAvPjxwYXRoIGZpbGw9IiNmYmZiZmYiIGQ9J00gNTAwIDAgTCAxMDAwIDAgTCA1MDAgNjAwIFonIGZpbGwtb3BhY2l0eT0nMC4zJyAvPjwvc3ZnPg==');">
+    <div class="module" data-keywords="narrative hygiene,information integrity,disinformation,media literacy">
+      <h2>Narrative Hygiene & Anti‑Coercion</h2>
+      <p>Information environments influence our perceptions and decisions. This module outlines strategies to protect narratives against coercive manipulation while upholding freedom of expression.</p>
+      <details>
+        <summary>Building Blocks</summary>
+        <div>
+          <ul>
+            <li><strong>Media & Information Literacy:</strong> Cultivate critical thinking skills and empower citizens to recognise misinformation. Integrate media literacy education into school curricula and adult education【710553511326770†L392-L470】.</li>
+            <li><strong>Support Quality Journalism:</strong> Fund independent public service media, protect journalists and provide incentives for fact‑checking initiatives【710553511326770†L392-L470】.</li>
+            <li><strong>Election Integrity & Digital Competition:</strong> Combat political micro‑targeting, ensure transparency in online advertising and encourage a healthy digital ecosystem【710553511326770†L392-L470】.</li>
+            <li><strong>Safeguard Freedom of Expression:</strong> Any legislative measures against disinformation must respect Article 10 of the European Convention on Human Rights【710553511326770†L474-L488】.</li>
+            <li><strong>Multi‑Stakeholder Cooperation:</strong> Build synergies among governments, civil society, academia and tech platforms【710553511326770†L474-L551】.</li>
+          </ul>
+          <p>Adopt a holistic strategy: combine regulation, education and empowerment. Regularly assess information threats and update policies accordingly.</p>
+          <button class="complete-btn" data-module="narrative">Mark as Complete</button>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- Climate Resilience Section -->
+  <section id="climate" class="parallax" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTAwMCcgaGVpZ2h0PSc2MDAnIHZpZXdCb3g9JzAgMCAxMDAwIDYwMCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48ZGVmcz48cGF0dGVybiBpZD0iYyIgZ3JpZD0iIiB3aWR0aD0iMTAiIGhlaWdodD0iMTAiPjxwYXRoIGZpbGw9IiNlNmY1ZDAiIGQ9Ik0wIDBoMTB2MTBIMHoiLz48L2RlZnM+PGZpbHRlciBpZD0icSI+PGZlT2Zmc2V0IGR5PSI2IiBpeT0iMCI+PGZlQ29sb3JNYXRyaXggdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDIiLz48L2ZlT2Zmc2V0PjwvcXVvdD48cmVjdCBmaWx0ZXI9InVybCgjcSkKIiBmaWxsPSIjZTZmNWQwIiB3aWR0aD0iMTAwMCIgaGVpZ2h0PSI2MDAiIC8+PC9zdmc+');">
+    <div class="module" data-keywords="climate,adaptation,resilience,UAE framework,global goal">
+      <h2>Environmental & Climate Resilience</h2>
+      <p>Climate change exacerbates conflict risks and undermines livelihoods. This module adapts the UAE Framework for Global Climate Resilience and associated guidance to help communities adapt to our changing world.</p>
+      <details>
+        <summary>Guidance & Actions</summary>
+        <div>
+          <ul>
+            <li><strong>National Adaptation Plans:</strong> Develop and implement national plans and adaptation communications, informed by local knowledge and science【166989310209099†L264-L287】.</li>
+            <li><strong>Technical Support:</strong> Engage with the Adaptation Committee and the Least Developed Countries Expert Group to receive technical guidance and capacity‑building【166989310209099†L274-L287】【166989310209099†L286-L295】.</li>
+            <li><strong>Inclusive Participation:</strong> Ensure that women, youth, Indigenous peoples and vulnerable communities actively participate in designing and implementing adaptation measures.</li>
+            <li><strong>Finance & Equity:</strong> Secure sustainable finance for adaptation, prioritising equity and the most climate‑vulnerable regions.</li>
+          </ul>
+          <p>These guidelines support the development of resilient infrastructure, early warning systems and community‑based adaptation projects.</p>
+          <button class="complete-btn" data-module="climate">Mark as Complete</button>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- Data Protection Section -->
+  <section id="data" class="parallax" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTAwMCcgaGVpZ2h0PSc2MDAnIHZpZXdCb3g9JzAgMCAxMDAwIDYwMCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48Y2xpcFBhdGggaWQ9ImMiPjxyZWN0IHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjYwMCIgeD0iMCIgeT0iMCIgLz48L2NsaXBQYXRoPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iYSIgeTE9IjAiIHgyPSIxMDAwIiB5Mj0iNjAwIj48c3RvcCBzdG9wLWNvbG9yPSIjZmZmIiBvZmZzZXQ9IjAlIi8+PHN0b3Agc3RvcC1jb2xvcj0iI2FhYWFhYSIgb2Zmc2V0PSIxMDAlIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgZmlsbD0idXJsKCNhKSIgd2lkdGg9IjEwMDAiIGhlaWdodD0iNjAwIi8+PHJlY3QgZmlsbD0iI2VlZWVlZSIgeD0iMTUwIiB5PSI5MCIgd2lkdGg9IjcwMCIgaGVpZ2h0PSI0MjAiIGZpbHRlcj0idXJsKCNjKSIvPjwvc3ZnPg==');">
+    <div class="module" data-keywords="data protection,privacy,GDPR,principles">
+      <h2>Data Protection & Privacy</h2>
+      <p>Respect for privacy and responsible data handling are cornerstones of modern governance. This module interprets the General Data Protection Regulation (GDPR) principles for policy design and program implementation.</p>
+      <details>
+        <summary>Key Principles</summary>
+        <div>
+          <ul>
+            <li><strong>Lawfulness, Fairness & Transparency:</strong> Collect and process personal data on a valid legal basis; be clear about how data will be used and respect individuals’ expectations【443047946845928†L96-L126】【443047946845928†L211-L224】.</li>
+            <li><strong>Purpose Limitation & Minimisation:</strong> Use data only for specified purposes and collect only what is necessary【443047946845928†L96-L126】.</li>
+            <li><strong>Accuracy & Storage Limitation:</strong> Keep data accurate and up to date; delete or anonymise it when no longer needed【443047946845928†L96-L126】.</li>
+            <li><strong>Integrity, Confidentiality & Accountability:</strong> Secure data against breaches and document compliance measures; adopt privacy by design and default【443047946845928†L96-L126】【472156813427076†L804-L813】.</li>
+          </ul>
+          <p>Policies should integrate privacy impact assessments, data subject rights and transparent redress mechanisms. Prioritise data minimisation to reduce risk.</p>
+          <button class="complete-btn" data-module="data">Mark as Complete</button>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- Mental Health Section -->
+  <section id="mental" class="parallax" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTAwMCcgaGVpZ2h0PSc2MDAnIHZpZXdCb3g9JzAgMCAxMDAwIDYwMCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cmVjdCB3aWR0aD0nMTAwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9JyNlZWZlZmUnIC8+PGNpcmNsZSBjeD0nNTAwJyBjeT0nMzAwJyByPScyNTAnIGZpbGw9JyNmNmVlZjUnIG9wYWNpdHk9JzAuNScgLz48cGF0aCBmaWxsPSIjZTVlZmVjIiBkPSdNMCAwIEwxMDAwIDYwMCAnIGZpbGwtb3BhY2l0eT0nMC4yJyAvPjwvc3ZnPg==');">
+    <div class="module" data-keywords="mental health,resilience,action plan,W WHO,community care">
+      <h2>Mental Health & Resilience</h2>
+      <p>Mental wellbeing is essential for individual and societal resilience. This module derives from the WHO Comprehensive Mental Health Action Plan 2013–2030 to support integrated care and stigma reduction.</p>
+      <details>
+        <summary>Strategies & Targets</summary>
+        <div>
+          <ul>
+            <li><strong>Leadership & Governance:</strong> Implement mental health policies and laws that align with human rights, ensuring sufficient funding and intersectoral coordination【849382799892088†L241-L245】.</li>
+            <li><strong>Community‑Based Care:</strong> Expand integrated, community‑based mental health services and psychosocial support, moving away from institutionalisation【849382799892088†L241-L245】.</li>
+            <li><strong>Promotion & Prevention:</strong> Run awareness campaigns, school programmes and suicide prevention initiatives that foster mental wellbeing and resilience【849382799892088†L261-L307】.</li>
+            <li><strong>Information Systems & Research:</strong> Establish data collection systems to inform policies and monitor progress; invest in research and community feedback【849382799892088†L261-L307】.</li>
+          </ul>
+          <p>The action plan’s vision is a world where mental health is valued, promoted and protected, enabling everyone to access care without discrimination【849382799892088†L251-L258】.</p>
+          <button class="complete-btn" data-module="mental">Mark as Complete</button>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- Attributions & Licensing Section -->
+  <section id="attributions" class="parallax" style="background-image:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTAwMCcgaGVpZ2h0PSc2MDAnIHZpZXdCb3g9JzAgMCAxMDAwIDYwMCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cmVjdCB3aWR0aD0nMTAwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9JyNmMmYyZjInIC8+PHJlY3Qgd2lkdGg9JzEwMDAnIGhlaWdodD0nNjAwJyBmaWxsPSIjZmZmIiBvcGFjaXR5PScwLjUnIC8+PC9zdmc+');">
+    <div class="module" data-keywords="attributions,licenses,sources,credits">
+      <h2>Attributions & Licenses</h2>
+      <details open>
+        <summary>Sources & Credits</summary>
+        <div>
+          <p>This blueprint synthesises and translates publicly available frameworks and guidance documents. Key references include:</p>
+          <ol>
+            <li>Analysis of ceasefire structures emphasising clear rules, joint monitoring bodies, accountability and political consent【751952177289607†L109-L114】【751952177289607†L145-L164】.</li>
+            <li>UN guidance for mediators on building inclusive ceasefires and monitoring mechanisms【897556446669716†L97-L129】.</li>
+            <li>Human Rights Watch summary of the Political Declaration on Explosive Weapons in Populated Areas, outlining seven implementation principles【705677553384605†L146-L154】【705677553384605†L169-L189】.</li>
+            <li>Council of Europe report on strengthening information integrity and resisting disinformation【710553511326770†L392-L470】【710553511326770†L474-L551】.</li>
+            <li>UNFCCC adoption of the UAE Framework for Global Climate Resilience【166989310209099†L264-L295】.</li>
+            <li>Overview of GDPR data protection principles with examples【443047946845928†L96-L126】【443047946845928†L211-L224】【472156813427076†L804-L813】.</li>
+            <li>WHO Comprehensive Mental Health Action Plan 2013–2030【849382799892088†L241-L307】.</li>
+          </ol>
+          <p>Licenses: This document draws from open and publicly accessible sources. The narrative guidance and module structure are original. When adapting patterns and features from GitHub, we attributed them here. All rights remain with the original owners. Please ensure you comply with the terms of the underlying documents when reusing or adapting this blueprint.</p>
+        </div>
+      </details>
+      <p>Zero‑Harm & Anti‑Inversion: This blueprint is designed to prevent misuse. It includes only information promoting peace, protection and resilience. Do not use these materials to justify violence, coercion or discrimination. Local analytics operate solely on your device; no data is transmitted externally. You may reset or clear all stored data at any time.</p>
+    </div>
+  </section>
+
+  <script>
+    /*
+      Tooltips & Code Guide
+      Each major JavaScript section includes comments explaining its purpose, usage and expected outcomes. You can extend these modules by adding new entries to the modules array in the script. Use the same structure: id, title, keywords and any further configuration. The HUD and constellation will update automatically.
+    */
+
+    // Wait for DOM content to load before running interactive scripts
+    document.addEventListener('DOMContentLoaded', () => {
+      // Splash screen fades out after a short delay
+      setTimeout(() => {
+        document.getElementById('splash').classList.add('fade-out');
+      }, 1200);
+
+      // Initialize IndexedDB for progress tracking
+      const dbName = 'progressDB';
+      const storeName = 'modules';
+      let db;
+      const modules = [
+        {id:'ceasefire', title:'Ceasefire Mechanics'},
+        {id:'civilian', title:'Civilian Protection'},
+        {id:'verification', title:'Verification & Monitoring'},
+        {id:'narrative', title:'Narrative Hygiene'},
+        {id:'climate', title:'Environmental & Climate Resilience'},
+        {id:'data', title:'Data Protection & Privacy'},
+        {id:'mental', title:'Mental Health & Resilience'}
+      ];
+
+      // IndexedDB setup
+      function openDB() {
+        return new Promise((resolve, reject) => {
+          const request = indexedDB.open(dbName, 1);
+          request.onerror = () => reject('Error opening DB');
+          request.onsuccess = () => {
+            db = request.result;
+            resolve(db);
+          };
+          request.onupgradeneeded = (event) => {
+            db = event.target.result;
+            if (!db.objectStoreNames.contains(storeName)) {
+              db.createObjectStore(storeName, {keyPath:'id'});
+            }
+          };
+        });
+      }
+
+      // Get module progress
+      function getProgress() {
+        return new Promise((resolve) => {
+          const transaction = db.transaction([storeName], 'readonly');
+          const store = transaction.objectStore(storeName);
+          const request = store.getAll();
+          request.onsuccess = () => {
+            const result = {};
+            request.result.forEach(item => result[item.id] = item.completed);
+            resolve(result);
+          };
+        });
+      }
+
+      // Set module progress
+      function setProgress(id, completed) {
+        return new Promise((resolve) => {
+          const transaction = db.transaction([storeName], 'readwrite');
+          const store = transaction.objectStore(storeName);
+          store.put({id, completed});
+          transaction.oncomplete = () => resolve();
+        });
+      }
+
+      // Reset progress
+      function resetProgress() {
+        return new Promise((resolve) => {
+          const transaction = db.transaction([storeName], 'readwrite');
+          const store = transaction.objectStore(storeName);
+          const clearReq = store.clear();
+          clearReq.onsuccess = () => resolve();
+        });
+      }
+
+      // Update HUD display
+      async function updateHUD() {
+        const progress = await getProgress();
+        const hudList = document.getElementById('hud-list');
+        hudList.innerHTML = '';
+        modules.forEach(mod => {
+          const completed = progress[mod.id];
+          const li = document.createElement('li');
+          li.innerHTML = `<span>${mod.title}</span><span>${completed ? '✓' : '✗'}</span>`;
+          hudList.appendChild(li);
+        });
+      }
+
+      // Update Constellation canvas
+      async function drawConstellation() {
+        const progress = await getProgress();
+        const canvas = document.getElementById('constellation');
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Set node positions in a circle
+        const centerX = canvas.width/2;
+        const centerY = canvas.height/2;
+        const radius = Math.min(centerX, centerY) - 30;
+        const positions = modules.map((_, i) => {
+          const angle = (2 * Math.PI / modules.length) * i;
+          return {
+            x: centerX + radius * Math.cos(angle),
+            y: centerY + radius * Math.sin(angle)
+          };
+        });
+        // Draw connections
+        ctx.strokeStyle = '#c5c9d6';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < positions.length; i++) {
+          for (let j = i+1; j < positions.length; j++) {
+            ctx.beginPath();
+            ctx.moveTo(positions[i].x, positions[i].y);
+            ctx.lineTo(positions[j].x, positions[j].y);
+            ctx.stroke();
+          }
+        }
+        // Draw nodes
+        positions.forEach((pos, idx) => {
+          const completed = progress[modules[idx].id];
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, 10, 0, 2 * Math.PI);
+          ctx.fillStyle = completed ? '#1e3799' : '#d1d9e6';
+          ctx.fill();
+          ctx.strokeStyle = '#596275';
+          ctx.stroke();
+        });
+      }
+
+      // Initialize translation
+      const languages = {
+        en: 'English', es: 'Spanish', fr: 'French', de: 'German', it: 'Italian', pt: 'Portuguese', ru: 'Russian', zh: 'Chinese', ja: 'Japanese', ar: 'Arabic', hi: 'Hindi', bn: 'Bengali', ur: 'Urdu', sw: 'Swahili', tr: 'Turkish', vi: 'Vietnamese', ko: 'Korean', he: 'Hebrew', nl: 'Dutch', el: 'Greek', pl: 'Polish'
+      };
+      const translations = {}; // will store text translations by selector and language
+      const languageSelector = document.getElementById('language');
+      // Populate language selector
+      Object.keys(languages).forEach(code => {
+        const option = document.createElement('option');
+        option.value = code;
+        option.textContent = languages[code];
+        languageSelector.appendChild(option);
+      });
+      // Default language
+      languageSelector.value = 'en';
+      // Save selected language in IndexedDB (separate store)
+      const settingsDBName = 'settingsDB';
+      const settingsStoreName = 'prefs';
+      let settingsDB;
+      function openSettingsDB() {
+        return new Promise((resolve,reject) => {
+          const request = indexedDB.open(settingsDBName,1);
+          request.onerror = () => reject('Settings DB error');
+          request.onsuccess = () => { settingsDB = request.result; resolve(settingsDB); };
+          request.onupgradeneeded = e => {
+            const dbs = e.target.result;
+            if (!dbs.objectStoreNames.contains(settingsStoreName)) {
+              dbs.createObjectStore(settingsStoreName,{keyPath:'key'});
+            }
+          };
+        });
+      }
+      async function saveLanguage(code) {
+        const tx = settingsDB.transaction([settingsStoreName],'readwrite');
+        tx.objectStore(settingsStoreName).put({key:'language', value:code});
+      }
+      async function getLanguage() {
+        return new Promise(resolve => {
+          const tx = settingsDB.transaction([settingsStoreName],'readonly');
+          const req = tx.objectStore(settingsStoreName).get('language');
+          req.onsuccess = () => resolve(req.result ? req.result.value : 'en');
+        });
+      }
+
+      // Translate page by scanning elements with data-translate attributes
+      async function translatePage(lang) {
+        const allElements = document.querySelectorAll('[data-translate]');
+        for (const el of allElements) {
+          const key = el.getAttribute('data-translate');
+          if (!translations[key]) translations[key] = {};
+          if (translations[key][lang]) {
+            el.textContent = translations[key][lang];
+          } else {
+            // Try remote translation via MyMemory API
+            const text = el.textContent;
+            if (lang === 'en') {
+              translations[key][lang] = text;
+              continue;
+            }
+            try {
+              const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${lang}`);
+              const data = await res.json();
+              const translated = data.responseData.translatedText;
+              translations[key][lang] = translated;
+              el.textContent = translated;
+            } catch (err) {
+              // fallback: keep original text if translation fails
+              translations[key][lang] = text;
+              el.textContent = text;
+            }
+          }
+        }
+      }
+
+      // Search filtering
+      document.getElementById('search').addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        document.querySelectorAll('.module').forEach(mod => {
+          const keywords = mod.getAttribute('data-keywords');
+          if (!query || keywords.toLowerCase().includes(query)) {
+            mod.parentElement.style.display = '';
+          } else {
+            mod.parentElement.style.display = 'none';
+          }
+        });
+      });
+
+      // Complete buttons logic
+      document.querySelectorAll('.complete-btn').forEach(btn => {
+        btn.addEventListener('click', async function() {
+          const id = this.getAttribute('data-module');
+          await setProgress(id, true);
+          await updateHUD();
+          await drawConstellation();
+        });
+      });
+
+      // Reset progress button
+      document.getElementById('reset-progress').addEventListener('click', async () => {
+        await resetProgress();
+        await updateHUD();
+        await drawConstellation();
+      });
+
+      // Listen for language changes
+      languageSelector.addEventListener('change', async function() {
+        const lang = this.value;
+        await saveLanguage(lang);
+        translatePage(lang);
+      });
+
+      // Initialize DBs and load state
+      (async () => {
+        await openDB();
+        await openSettingsDB();
+        // load saved language
+        const savedLang = await getLanguage();
+        languageSelector.value = savedLang;
+        // Mark translatable elements
+        document.querySelectorAll('h1,h2,h3,p,summary,button,label,li,option').forEach(el => {
+          const key = el.textContent.trim().slice(0,100);
+          el.setAttribute('data-translate', key);
+        });
+        await updateHUD();
+        await drawConstellation();
+        await translatePage(savedLang);
+      })();
+    });
+
+    // Service Worker registration for offline support
+    if ('serviceWorker' in navigator) {
+      // Inline service worker as Blob; caches the page and assets
+      const swCode = `
+        const cacheName = 'doctrine-cache-v1';
+        const offlineUrl = '/';
+        self.addEventListener('install', event => {
+          self.skipWaiting();
+          event.waitUntil(
+            caches.open(cacheName).then(cache => cache.addAll(['./']))
+          );
+        });
+        self.addEventListener('fetch', event => {
+          event.respondWith(
+            caches.match(event.request).then(response => {
+              return response || fetch(event.request).then(resp => {
+                const respClone = resp.clone();
+                caches.open(cacheName).then(cache => cache.put(event.request, respClone));
+                return resp;
+              });
+            }).catch(() => caches.match(offlineUrl))
+          );
+        });
+      `;
+      const blob = new Blob([swCode], {type:'application/javascript'});
+      const swUrl = URL.createObjectURL(blob);
+      navigator.serviceWorker.register(swUrl);
+    }
+  </script>
+</body>
+</html>
